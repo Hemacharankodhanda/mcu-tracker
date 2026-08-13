@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MCU Tracker — Track your Marvel Cinematic Universe watch progress, explore interactive timelines, and test your knowledge with MCU quizzes.">
+  <meta name="theme-color" content="#0B0B0F">
+  <title>MCU Tracker — Watch Progress, Quizzes & Roadmaps</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Favicon (simple red square) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23ED1D24'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' font-weight='bold' fill='white'>M</text></svg>">
+</head>
+<body>
+  <div class="app">
+    
+    <!-- ══════════════════════════════════════════════════════
+         NAVIGATION
+         ══════════════════════════════════════════════════════ -->
+    <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+      <!-- Brand (desktop only) -->
+      <div class="nav-brand">
+        <div class="nav-brand__logo">M</div>
+        <div class="nav-brand__text">MCU Tracker</div>
+      </div>
+      
+      <a class="nav-item nav-item--active" data-page="dashboard" href="#dashboard" id="nav-dashboard">
+        <span class="nav-item__icon">
+          <i data-lucide="home"></i>
+        </span>
+        <span class="nav-item__label">Home</span>
+      </a>
+      
+      <a class="nav-item" data-page="tracker" href="#tracker" id="nav-tracker">
+        <span class="nav-item__icon">
+          <i data-lucide="check-square"></i>
+        </span>
+        <span class="nav-item__label">Tracker</span>
+      </a>
+      
+      <a class="nav-item" data-page="timeline" href="#timeline" id="nav-timeline">
+        <span class="nav-item__icon">
+          <i data-lucide="route"></i>
+        </span>
+        <span class="nav-item__label">Timeline</span>
+      </a>
+      
+      <a class="nav-item" data-page="quizzes" href="#quizzes" id="nav-quizzes">
+        <span class="nav-item__icon">
+          <i data-lucide="help-circle"></i>
+        </span>
+        <span class="nav-item__label">Quizzes</span>
+      </a>
+      
+      <a class="nav-item" data-page="profile" href="#profile" id="nav-profile">
+        <span class="nav-item__icon">
+          <i data-lucide="user"></i>
+        </span>
+        <span class="nav-item__label">Profile</span>
+      </a>
+    </nav>
+
+    <!-- ══════════════════════════════════════════════════════
+         MAIN CONTENT
+         ══════════════════════════════════════════════════════ -->
+    <main class="main-content">
+      
+      <!-- ─── DASHBOARD ────────────────────────────────── -->
+      <section class="page page--active" id="page-dashboard" aria-label="Dashboard">
+        <div id="dashboard-content"></div>
+        
+        <div class="disclaimer">
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This product uses the TMDB API but is not endorsed or certified by TMDB.
+        </div>
+      </section>
+      
+      <!-- ─── TRACKER ──────────────────────────────────── -->
+      <section class="page" id="page-tracker" aria-label="Watch Tracker">
+        <div class="page-header">
+          <h1 class="page-header__title">Watch Tracker</h1>
+          <p class="page-header__subtitle">Track your progress through the Marvel Cinematic Universe</p>
+        </div>
+        
+        <div id="tracker-controls" class="tracker-controls"></div>
+        <div id="tracker-list"></div>
+      </section>
+      
+      <!-- ─── TIMELINE ─────────────────────────────────── -->
+      <section class="page" id="page-timeline" aria-label="MCU Timeline">
+        <div class="page-header">
+          <h1 class="page-header__title">MCU Timeline</h1>
+          <p class="page-header__subtitle">Explore the in-universe chronology and release history</p>
+        </div>
+        
+        <div id="timeline-controls" class="timeline-controls"></div>
+        <div id="timeline-content"></div>
+      </section>
+      
+      <!-- ─── QUIZZES ──────────────────────────────────── -->
+      <section class="page" id="page-quizzes" aria-label="Quizzes">
+        <div class="page-header">
+          <h1 class="page-header__title">MCU Quizzes</h1>
+          <p class="page-header__subtitle">Test your Marvel knowledge and build your streak</p>
+        </div>
+        
+        <div id="quiz-content"></div>
+      </section>
+      
+      <!-- ─── PROFILE ──────────────────────────────────── -->
+      <section class="page" id="page-profile" aria-label="Profile">
+        <div id="profile-content"></div>
+        
+        <div class="disclaimer">
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This product uses the TMDB API but is not endorsed or certified by TMDB.
+        </div>
+      </section>
+      <!-- ─── DETAILS ──────────────────────────────────── -->
+      <section class="page" id="page-details" aria-label="Title Details">
+        <div id="details-content"></div>
+      </section>
+      
+    </main>
+  </div>
+
+  <!-- Scripts (order matters: data → tmdb → storage → pages → app) -->
+  <script src="js/data.js"></script>
+  <script src="js/tmdb.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/tracker.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/details.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+/* =============================================================
+   MCU Tracker — Layout (layout.css)
+   Grid, navigation, page structure, responsive
+   ============================================================= */
+
+/* ── App Shell ────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Main Content ─────────────────────────────────────────── */
+.main-content {
+  flex: 1;
+  padding-bottom: calc(var(--nav-height) + var(--space-5));
+}
+
+/* ── Page Container ───────────────────────────────────────── */
+.page {
+  display: none;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  animation: pageFadeIn var(--transition-page) ease;
+}
+
+.page--active {
+  display: block;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Page Header ──────────────────────────────────────────── */
+.page-header {
+  margin-bottom: var(--space-6);
+}
+
+.page-header__title {
+  font-size: var(--text-h1);
+  margin-bottom: var(--space-2);
+}
+
+.page-header__subtitle {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+/* ── Section ──────────────────────────────────────────────── */
+.section {
+  margin-bottom: var(--space-7);
+}
+
+.section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-5);
+}
+
+.section__title {
+  font-size: var(--text-h2);
+}
+
+.section__action {
+  font-size: var(--text-small);
+  color: var(--color-hero-red);
+  cursor: pointer;
+  transition: color var(--transition-tap);
+}
+
+.section__action:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Grid Layouts ─────────────────────────────────────────── */
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--stats {
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.grid--badges {
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--space-5);
+}
+
+.grid--categories {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ── Stack (vertical list) ────────────────────────────────── */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stack--sm {
+  gap: var(--space-2);
+}
+
+.stack--lg {
+  gap: var(--space-5);
+}
+
+/* ── Bottom Navigation ────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 900;
+  padding: 0 var(--space-2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(22, 22, 29, 0.92);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  transition: color var(--transition-tap);
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 56px;
+}
+
+.nav-item:hover {
+  color: var(--color-text-secondary);
+}
+
+.nav-item--active {
+  color: var(--color-hero-red);
+}
+
+.nav-item__icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.nav-item__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-item__label {
+  font-size: 10px;
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Toolbar / Action Bar ─────────────────────────────────── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .page {
+    padding: var(--space-7) var(--space-6);
+  }
+
+  .grid--stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .main-content {
+    padding-bottom: var(--space-6);
+    margin-left: var(--nav-width-desktop);
+  }
+
+  .bottom-nav {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: var(--nav-width-desktop);
+    height: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: var(--space-6) var(--space-4);
+    gap: var(--space-1);
+    border-top: none;
+    border-right: 1px solid var(--color-border);
+    background: var(--color-surface);
+    backdrop-filter: none;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    margin-bottom: var(--space-6);
+    color: var(--color-text-primary);
+  }
+
+  .nav-brand__logo {
+    width: 32px;
+    height: 32px;
+    background: var(--color-hero-red);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-small);
+    color: #fff;
+  }
+
+  .nav-brand__text {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-item {
+    flex-direction: row;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    width: 100%;
+    border-radius: var(--radius-md);
+    min-width: auto;
+  }
+
+  .nav-item--active {
+    background: var(--color-red-tint);
+  }
+
+  .nav-item__label {
+    font-size: var(--text-small);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .page {
+    padding: var(--space-7) var(--space-8);
+  }
+}
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .page {
+    max-width: 1400px;
+  }
+}
+
+/* Mobile-only: hide brand */
+@media (max-width: 1023px) {
+  .nav-brand {
+    display: none;
+  }
+}
