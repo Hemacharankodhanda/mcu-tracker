@@ -1,6 +1,7 @@
+
 # MCU Tracker
 
-A premium companion web app for Marvel Cinematic Universe fans — track what you've watched, explore an interactive sticky-scroll timeline, test your knowledge with quizzes, and earn badges across the entire MCU.
+A premium, fully client-side companion app for Marvel Cinematic Universe fans. Track what you've watched, scroll through an editorial-style interactive timeline, test your knowledge with quizzes, and unlock badges across all 55 titles in the MCU.
 
 > This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.
 
@@ -8,12 +9,12 @@ A premium companion web app for Marvel Cinematic Universe fans — track what yo
 
 ## Features
 
-- **Watch Tracker** — Mark 55 MCU titles as Unwatched / Watched / Rewatched, rate them 1–5 stars, and browse by Release Order, Chronological Order, or a curated Recommended order for newcomers
-- **Interactive Timeline** — A sticky-scroll, editorial-style timeline: a pinned poster crossfades on the left as you scroll through titles with large kinetic typography on the right
-- **Quizzes** — 5 trivia categories, a daily challenge with streak tracking, and score history
-- **Profile & Badges** — Watch stats, saga/phase progress bars, quiz stats, and a 12-badge achievement grid
-- **Real poster art** — Powered by [TMDB](https://www.themoviedb.org/), cached locally so it only fetches once per title
-- **Fully client-side** — No backend, no build step, all progress saved to `localStorage`
+- **Watch Tracker** — Mark all 55 MCU titles as Unwatched, Watched, or Rewatched, rate each one 1–5 stars, and browse by Release Order, Chronological Order, or a curated Recommended order for newcomers.
+- **Interactive Timeline** — A sticky-scroll, editorial-style layout: a pinned poster crossfades on the left while large kinetic typography scrolls past on the right.
+- **Quizzes** — Five trivia categories, a daily challenge with streak tracking, and full score history.
+- **Profile & Badges** — Watch stats, saga/phase progress bars, quiz performance, and a 12-badge achievement grid.
+- **Real poster art** — Pulled from [TMDB](https://www.themoviedb.org/) and cached locally, so each title is only fetched once.
+- **Fully client-side** — No backend, no build step. All progress lives in `localStorage`.
 
 ---
 
@@ -21,14 +22,14 @@ A premium companion web app for Marvel Cinematic Universe fans — track what yo
 
 | Layer | Choice |
 |---|---|
-| Structure | Vanilla HTML — single-page app, hash-based routing |
-| Styling | Vanilla CSS — custom properties for design tokens, no framework |
-| Logic | Vanilla JavaScript — no build step, no bundler |
-| Data | Static MCU catalog (`data.js`) + [TMDB API](https://developers.themoviedb.org/3) for poster art |
-| Persistence | Browser `localStorage` (no backend/database) |
+| Structure | Vanilla HTML — single-page app with hash-based routing |
+| Styling | Vanilla CSS — design tokens via custom properties, no framework |
+| Logic | Vanilla JavaScript — no bundler, no build step |
+| Data | Static MCU catalog (`data.js`) + [TMDB API](https://developers.themoviedb.org/3) for posters |
+| Persistence | Browser `localStorage` — no backend or database |
 | Fonts | Barlow Condensed (display), Inter (body), JetBrains Mono (stats/numerals) — via Google Fonts |
 
-No npm install, no build pipeline — it runs directly in a browser.
+No `npm install`, no build pipeline — it just runs in a browser.
 
 ---
 
@@ -40,7 +41,7 @@ No npm install, no build pipeline — it runs directly in a browser.
 ```bash
 open index.html
 ```
-Works with zero setup, but poster fetching and some fetch-based features work more reliably served over `http(s)://` than `file://`.
+Zero setup required, but poster fetching and other fetch-based features behave more reliably over `http(s)://` than `file://`.
 
 **Option B — Local server (recommended)**
 ```bash
@@ -50,18 +51,18 @@ Then visit `http://localhost:3000`.
 
 ### Set up poster images (TMDB)
 
-Posters are fetched from TMDB and cached in `localStorage` after first load.
+Posters are fetched from TMDB and cached in `localStorage` after the first load.
 
-1. Create a free account at [themoviedb.org](https://www.themoviedb.org/)
-2. Go to **Settings → API → Request an API Key** (choose "Developer" for free non-commercial use)
-3. Copy your **API Key (v3 auth)**
+1. Create a free account at [themoviedb.org](https://www.themoviedb.org/).
+2. Go to **Settings → API → Request an API Key** (choose "Developer" for free, non-commercial use).
+3. Copy your **API Key (v3 auth)**.
 4. Add it to `js/tmdb.js`:
    ```javascript
    const TMDB_API_KEY = 'YOUR_KEY_HERE';
    ```
-5. On first load, the app will look up and cache a poster for each title. Subsequent visits read from the cache — no repeat API calls.
+5. On first load, the app looks up and caches a poster for each title. Every visit after that reads from the cache — no repeat API calls.
 
-If a poster fails to fetch (offline, rate-limited, no match found), the app falls back to a gradient placeholder rather than breaking the layout.
+If a poster fails to fetch (offline, rate-limited, no match found), the app falls back to a gradient placeholder instead of breaking the layout.
 
 ---
 
@@ -72,7 +73,7 @@ marvel-tracker/
 ├── index.html                  # Single-page HTML entry point (SPA)
 ├── README.md                   # This file
 ├── MCU-Tracker-PRD.md          # Product Requirements Document
-├── MCU-Tracker-design.md       # Design System & UI Guidelines
+├── MCU-Tracker-design.md       # Design system & UI guidelines
 ├── PROJECT-CONTEXT.md          # Detailed architecture & data reference
 │
 ├── css/
@@ -100,7 +101,7 @@ marvel-tracker/
 
 ## Data & Persistence
 
-Everything is stored in the browser — there is no server or database. Clearing your browser's `localStorage` for this site resets all progress.
+Everything lives in the browser — there's no server or database. Clearing this site's `localStorage` resets all progress.
 
 | Key | Description |
 |---|---|
