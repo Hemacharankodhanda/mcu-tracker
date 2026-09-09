@@ -1,0 +1,27 @@
+{
+  "name": "mcu-tracker",
+  "version": "1.0.0",
+  "description": "A premium, fully client-side companion app for Marvel Cinematic Universe fans. Track what you've watched, scroll through an editorial-style interactive timeline, test your knowledge with quizzes, and unlock badges across all 55 titles in the MCU.",
+  "main": "update_data.js",
+  "scripts": {
+    "build:analytics": "esbuild src/analytics.js --bundle --minify --outfile=js/analytics.bundle.js --format=iife",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hemacharankodhanda/mcu-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hemacharankodhanda/mcu-tracker/issues"
+  },
+  "homepage": "https://github.com/Hemacharankodhanda/mcu-tracker#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
