@@ -85,10 +85,6 @@ The app purposefully avoids loud "comic book" clichés (e.g., halftones, red-to-
 - **Action/Progress (`--color-hero-red`):** `#ED1D24` (Used strictly for action buttons, watched indicators).
 - **Rewards/Achievements (`--color-infinity-gold`):** `#C9A227` (Used sparingly for badges, star ratings, and the timeline phase rail).
 
-**Typography:**
-- **Display/Headlines:** `Barlow Condensed` (Structural, militaristic, similar to MCU marketing).
-- **Body Text:** `Inter` (Highly legible for data-dense areas).
-- **Numerals/Stats:** `JetBrains Mono` or `IBM Plex Mono` (Tabular figures for stats and countdowns).
 
 ---
 
