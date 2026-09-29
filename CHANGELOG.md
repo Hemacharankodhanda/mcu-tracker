@@ -13,3 +13,5 @@
 
 ## [2026-09-29 19:00:35] - docs: document timeline continuity notes for series
 
+## [2026-09-29 20:30:42] - perf: refine image loading attributes and poster fallbacks
+
