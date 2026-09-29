@@ -11,3 +11,5 @@
 
 ## [2026-09-29 17:30:28] - style: optimize hero search input padding and icon placement
 
+## [2026-09-29 19:00:35] - docs: document timeline continuity notes for series
+
