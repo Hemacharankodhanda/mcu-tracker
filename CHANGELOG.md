@@ -21,3 +21,5 @@
 
 ## [2026-09-30 11:48:14] - fix: ensure phase dropdown resets correctly on clear
 
+## [2026-09-30 12:24:21] - refactor: extract date formatter utility in main script
+
