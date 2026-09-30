@@ -35,3 +35,5 @@
 
 ## [2026-09-30 16:00:03] - style: standardize modal close button hit area
 
+## [2026-09-30 16:36:10] - fix: handle missing runtime values gracefully in card metadata
+
