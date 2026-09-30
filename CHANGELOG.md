@@ -33,3 +33,5 @@
 
 ## [2026-09-30 15:24:56] - feat: add quick jump button to Multiverse Saga
 
+## [2026-09-30 16:00:03] - style: standardize modal close button hit area
+
