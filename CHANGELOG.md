@@ -23,3 +23,5 @@
 
 ## [2026-09-30 12:24:21] - refactor: extract date formatter utility in main script
 
+## [2026-09-30 13:00:28] - docs: update README with supported release phase list
+
