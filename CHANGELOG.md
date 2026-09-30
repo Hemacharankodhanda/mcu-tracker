@@ -51,3 +51,5 @@
 
 ## [2026-09-30 20:48:59] - style: refine empty state illustration spacing
 
+## [2026-09-30 21:24:06] - chore: sync timeline progress markers
+
