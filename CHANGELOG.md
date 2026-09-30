@@ -15,3 +15,5 @@
 
 ## [2026-09-29 20:30:42] - perf: refine image loading attributes and poster fallbacks
 
+## [2026-09-30 10:36:00] - feat: add phase filter badge component styling
+
