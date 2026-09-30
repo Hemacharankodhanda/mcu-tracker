@@ -29,3 +29,5 @@
 
 ## [2026-09-30 14:12:42] - fix: prevent text overflow on elongated movie titles
 
+## [2026-09-30 14:48:49] - style: add subtle glow effect to Infinity Saga highlights
+
