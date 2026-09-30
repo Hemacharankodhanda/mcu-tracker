@@ -19,3 +19,5 @@
 
 ## [2026-09-30 11:12:07] - style: refine active filter chip background and contrast
 
+## [2026-09-30 11:48:14] - fix: ensure phase dropdown resets correctly on clear
+
