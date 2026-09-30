@@ -27,3 +27,5 @@
 
 ## [2026-09-30 13:36:35] - style: improve timeline node alignment on mobile viewports
 
+## [2026-09-30 14:12:42] - fix: prevent text overflow on elongated movie titles
+
