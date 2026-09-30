@@ -39,3 +39,5 @@
 
 ## [2026-09-30 17:12:17] - perf: debounce search input handler for faster query filtering
 
+## [2026-09-30 17:48:24] - style: polish scrollbar aesthetics for webkit browsers
+
