@@ -45,3 +45,5 @@
 
 ## [2026-09-30 19:00:38] - refactor: organize CSS custom properties for theme colors
 
+## [2026-09-30 19:36:45] - style: adjust typography scale for secondary metadata
+
