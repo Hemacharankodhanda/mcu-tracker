@@ -17,3 +17,5 @@
 
 ## [2026-09-30 10:36:00] - feat: add phase filter badge component styling
 
+## [2026-09-30 11:12:07] - style: refine active filter chip background and contrast
+
