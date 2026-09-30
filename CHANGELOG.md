@@ -37,3 +37,5 @@
 
 ## [2026-09-30 16:36:10] - fix: handle missing runtime values gracefully in card metadata
 
+## [2026-09-30 17:12:17] - perf: debounce search input handler for faster query filtering
+
