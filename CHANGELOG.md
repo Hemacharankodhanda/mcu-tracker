@@ -41,3 +41,5 @@
 
 ## [2026-09-30 17:48:24] - style: polish scrollbar aesthetics for webkit browsers
 
+## [2026-09-30 18:24:31] - docs: clarify release date verification source references
+
