@@ -49,3 +49,5 @@
 
 ## [2026-09-30 20:12:52] - fix: correct aspect ratio distortion on specific banner assets
 
+## [2026-09-30 20:48:59] - style: refine empty state illustration spacing
+
