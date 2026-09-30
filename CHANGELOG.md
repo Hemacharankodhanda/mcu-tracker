@@ -47,3 +47,5 @@
 
 ## [2026-09-30 19:36:45] - style: adjust typography scale for secondary metadata
 
+## [2026-09-30 20:12:52] - fix: correct aspect ratio distortion on specific banner assets
+
