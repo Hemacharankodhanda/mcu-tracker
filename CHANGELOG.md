@@ -55,3 +55,5 @@
 
 ## [2026-10-01 11:42:00] - feat: add upcoming release indicator capsule
 
+## [2026-10-01 13:24:07] - style: soften card backdrop blur for improved performance
+
