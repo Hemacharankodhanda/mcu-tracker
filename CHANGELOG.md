@@ -61,3 +61,5 @@
 
 ## [2026-10-01 16:48:21] - refactor: streamline DOM query selectors in card rendering
 
+## [2026-10-01 18:30:28] - docs: add quickstart guidance for running local server
+
