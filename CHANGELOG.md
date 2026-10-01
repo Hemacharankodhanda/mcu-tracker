@@ -63,3 +63,5 @@
 
 ## [2026-10-01 18:30:28] - docs: add quickstart guidance for running local server
 
+## [2026-10-01 20:12:35] - style: adjust footer contrast to meet WCAG standards
+
