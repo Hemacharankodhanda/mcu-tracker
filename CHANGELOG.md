@@ -59,3 +59,5 @@
 
 ## [2026-10-01 15:06:14] - fix: sync Disney+ premiere tags with theatrical releases
 
+## [2026-10-01 16:48:21] - refactor: streamline DOM query selectors in card rendering
+
