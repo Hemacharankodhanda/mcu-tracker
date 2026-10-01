@@ -53,3 +53,5 @@
 
 ## [2026-09-30 21:24:06] - chore: sync timeline progress markers
 
+## [2026-10-01 11:42:00] - feat: add upcoming release indicator capsule
+
