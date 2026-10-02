@@ -89,3 +89,5 @@
 
 ## [2026-10-02 16:00:17] - style: adjust card skeleton placeholder pulse timing
 
+## [2026-10-02 16:30:24] - perf: eliminate layout shift during image render
+
