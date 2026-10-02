@@ -77,3 +77,5 @@
 
 ## [2026-10-02 13:00:35] - docs: document sort order calculation in context markdown
 
+## [2026-10-02 13:30:42] - refactor: modularize sort comparison functions
+
