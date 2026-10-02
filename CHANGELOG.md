@@ -73,3 +73,5 @@
 
 ## [2026-10-02 12:00:21] - perf: optimize re-sorting without re-fetching static datasets
 
+## [2026-10-02 12:30:28] - style: smooth reorder animation for card grid items
+
