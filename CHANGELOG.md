@@ -65,3 +65,5 @@
 
 ## [2026-10-01 20:12:35] - style: adjust footer contrast to meet WCAG standards
 
+## [2026-10-02 10:30:00] - feat: implement chronological vs release order toggle logic
+
