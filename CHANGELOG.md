@@ -75,3 +75,5 @@
 
 ## [2026-10-02 12:30:28] - style: smooth reorder animation for card grid items
 
+## [2026-10-02 13:00:35] - docs: document sort order calculation in context markdown
+
