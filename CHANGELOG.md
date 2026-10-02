@@ -105,3 +105,5 @@
 
 ## [2026-10-02 20:00:13] - fix: resolve edge-case overlap on ultra-wide screens
 
+## [2026-10-02 20:30:20] - perf: minimize CSS repaint triggers on hover
+
