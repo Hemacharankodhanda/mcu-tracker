@@ -107,3 +107,5 @@
 
 ## [2026-10-02 20:30:20] - perf: minimize CSS repaint triggers on hover
 
+## [2026-10-02 21:00:27] - style: polish header brand mark alignment
+
