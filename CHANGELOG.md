@@ -99,3 +99,5 @@
 
 ## [2026-10-02 18:30:52] - style: highlight active card on keyboard focus outline
 
+## [2026-10-02 19:00:59] - docs: add accessibility audit checklist to design notes
+
