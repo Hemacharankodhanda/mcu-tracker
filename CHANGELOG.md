@@ -71,3 +71,5 @@
 
 ## [2026-10-02 11:30:14] - fix: preserve active search query when toggling sort order
 
+## [2026-10-02 12:00:21] - perf: optimize re-sorting without re-fetching static datasets
+
