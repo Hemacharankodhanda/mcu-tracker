@@ -85,3 +85,5 @@
 
 ## [2026-10-02 15:00:03] - style: polish tooltip positioning on desktop viewports
 
+## [2026-10-02 15:30:10] - fix: dismiss open tooltips on mobile viewport scroll
+
