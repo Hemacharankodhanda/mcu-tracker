@@ -79,3 +79,5 @@
 
 ## [2026-10-02 13:30:42] - refactor: modularize sort comparison functions
 
+## [2026-10-02 14:00:49] - style: refine badge colors for Special Presentations
+
