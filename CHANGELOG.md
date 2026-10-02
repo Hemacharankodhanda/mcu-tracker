@@ -83,3 +83,5 @@
 
 ## [2026-10-02 14:30:56] - fix: include Werewolf by Night and Guardians Holiday Special
 
+## [2026-10-02 15:00:03] - style: polish tooltip positioning on desktop viewports
+
