@@ -97,3 +97,5 @@
 
 ## [2026-10-02 18:00:45] - fix: ensure keyboard navigation reaches all card action links
 
+## [2026-10-02 18:30:52] - style: highlight active card on keyboard focus outline
+
