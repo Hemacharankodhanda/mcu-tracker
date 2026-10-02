@@ -81,3 +81,5 @@
 
 ## [2026-10-02 14:00:49] - style: refine badge colors for Special Presentations
 
+## [2026-10-02 14:30:56] - fix: include Werewolf by Night and Guardians Holiday Special
+
