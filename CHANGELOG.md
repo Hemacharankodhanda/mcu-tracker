@@ -95,3 +95,5 @@
 
 ## [2026-10-02 17:30:38] - style: add subtle border to dark cards for low-contrast displays
 
+## [2026-10-02 18:00:45] - fix: ensure keyboard navigation reaches all card action links
+
