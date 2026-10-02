@@ -67,3 +67,5 @@
 
 ## [2026-10-02 10:30:00] - feat: implement chronological vs release order toggle logic
 
+## [2026-10-02 11:00:07] - style: design switch control for order toggling
+
