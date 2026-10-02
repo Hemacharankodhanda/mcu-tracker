@@ -103,3 +103,5 @@
 
 ## [2026-10-02 19:30:06] - style: standardize padding across all container breakpoints
 
+## [2026-10-02 20:00:13] - fix: resolve edge-case overlap on ultra-wide screens
+
