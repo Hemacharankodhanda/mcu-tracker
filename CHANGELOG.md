@@ -87,3 +87,5 @@
 
 ## [2026-10-02 15:30:10] - fix: dismiss open tooltips on mobile viewport scroll
 
+## [2026-10-02 16:00:17] - style: adjust card skeleton placeholder pulse timing
+
