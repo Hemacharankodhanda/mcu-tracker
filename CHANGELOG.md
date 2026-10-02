@@ -69,3 +69,5 @@
 
 ## [2026-10-02 11:00:07] - style: design switch control for order toggling
 
+## [2026-10-02 11:30:14] - fix: preserve active search query when toggling sort order
+
