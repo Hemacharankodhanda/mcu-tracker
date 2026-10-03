@@ -119,3 +119,5 @@
 
 ## [2026-10-03 14:00:21] - docs: add citation links for upcoming premiere announcements
 
+## [2026-10-03 15:00:28] - refactor: simplify filter state reducer logic
+
