@@ -131,3 +131,5 @@
 
 ## [2026-10-03 20:00:03] - docs: update PROJECT-CONTEXT with recent architectural tweaks
 
+## [2026-10-03 21:00:10] - style: refine bottom navigation spacing for iOS safe areas
+
