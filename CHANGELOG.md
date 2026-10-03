@@ -129,3 +129,5 @@
 
 ## [2026-10-03 19:00:56] - perf: preconnect to external poster CDN domains
 
+## [2026-10-03 20:00:03] - docs: update PROJECT-CONTEXT with recent architectural tweaks
+
