@@ -113,3 +113,5 @@
 
 ## [2026-10-03 11:00:00] - feat: add status filter for released vs announced titles
 
+## [2026-10-03 12:00:07] - style: design status indicator dot with pulse animation
+
