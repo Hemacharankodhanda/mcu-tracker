@@ -115,3 +115,5 @@
 
 ## [2026-10-03 12:00:07] - style: design status indicator dot with pulse animation
 
+## [2026-10-03 13:00:14] - fix: update upcoming slate dates based on latest studio announcements
+
