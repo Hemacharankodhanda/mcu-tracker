@@ -123,3 +123,5 @@
 
 ## [2026-10-03 16:00:35] - style: improve tab navigation focus indicator contrast
 
+## [2026-10-03 17:00:42] - fix: prevent accidental form submission on enter in search
+
