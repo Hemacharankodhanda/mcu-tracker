@@ -117,3 +117,5 @@
 
 ## [2026-10-03 13:00:14] - fix: update upcoming slate dates based on latest studio announcements
 
+## [2026-10-03 14:00:21] - docs: add citation links for upcoming premiere announcements
+
