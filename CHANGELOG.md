@@ -127,3 +127,5 @@
 
 ## [2026-10-03 18:00:49] - style: adjust gap spacing between responsive grid columns
 
+## [2026-10-03 19:00:56] - perf: preconnect to external poster CDN domains
+
