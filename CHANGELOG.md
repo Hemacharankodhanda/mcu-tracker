@@ -111,3 +111,5 @@
 
 ## [2026-10-02 21:30:34] - chore: finalize Phase 5 release order integration
 
+## [2026-10-03 11:00:00] - feat: add status filter for released vs announced titles
+
