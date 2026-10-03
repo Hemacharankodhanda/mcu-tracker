@@ -121,3 +121,5 @@
 
 ## [2026-10-03 15:00:28] - refactor: simplify filter state reducer logic
 
+## [2026-10-03 16:00:35] - style: improve tab navigation focus indicator contrast
+
