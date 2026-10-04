@@ -159,3 +159,5 @@
 
 ## [2026-10-04 19:06:24] - perf: prune unneeded CSS selectors from stylesheet
 
+## [2026-10-04 19:48:31] - docs: summarize October feature set in CHANGELOG
+
