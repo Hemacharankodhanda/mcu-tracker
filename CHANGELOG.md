@@ -141,3 +141,5 @@
 
 ## [2026-10-04 12:48:21] - refactor: extract countdown interval updater to standalone method
 
+## [2026-10-04 13:30:28] - style: format countdown digits with tabular numeric font
+
