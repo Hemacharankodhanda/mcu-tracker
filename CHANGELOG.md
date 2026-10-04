@@ -149,3 +149,5 @@
 
 ## [2026-10-04 15:36:49] - style: polish animation easing for countdown tick
 
+## [2026-10-04 16:18:56] - feat: add share button copying current filtered view URL
+
