@@ -145,3 +145,5 @@
 
 ## [2026-10-04 14:12:35] - docs: explain countdown interval lifecycle in code comments
 
+## [2026-10-04 14:54:42] - fix: clear active interval on component unmount / teardown
+
