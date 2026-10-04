@@ -153,3 +153,5 @@
 
 ## [2026-10-04 17:00:03] - style: show transient toast confirmation on URL copy
 
+## [2026-10-04 17:42:10] - fix: handle clipboard permissions rejection gracefully
+
