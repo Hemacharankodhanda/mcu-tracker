@@ -163,3 +163,5 @@
 
 ## [2026-10-04 20:30:38] - style: polish all hover and active states across the interface
 
+## [2026-10-04 21:12:45] - chore: milestone release v1.4.0 timeline tracker
+
