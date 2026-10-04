@@ -133,3 +133,5 @@
 
 ## [2026-10-03 21:00:10] - style: refine bottom navigation spacing for iOS safe areas
 
+## [2026-10-04 10:42:00] - feat: add countdown timer helper for nearest upcoming premiere
+
