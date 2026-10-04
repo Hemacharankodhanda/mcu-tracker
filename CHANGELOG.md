@@ -147,3 +147,5 @@
 
 ## [2026-10-04 14:54:42] - fix: clear active interval on component unmount / teardown
 
+## [2026-10-04 15:36:49] - style: polish animation easing for countdown tick
+
