@@ -151,3 +151,5 @@
 
 ## [2026-10-04 16:18:56] - feat: add share button copying current filtered view URL
 
+## [2026-10-04 17:00:03] - style: show transient toast confirmation on URL copy
+
