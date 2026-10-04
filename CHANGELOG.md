@@ -137,3 +137,5 @@
 
 ## [2026-10-04 11:24:07] - style: style premiere countdown badge with vibrant gradient
 
+## [2026-10-04 12:06:14] - fix: calculate days remaining accurately across timezones
+
