@@ -143,3 +143,5 @@
 
 ## [2026-10-04 13:30:28] - style: format countdown digits with tabular numeric font
 
+## [2026-10-04 14:12:35] - docs: explain countdown interval lifecycle in code comments
+
