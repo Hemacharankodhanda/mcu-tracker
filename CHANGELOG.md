@@ -161,3 +161,5 @@
 
 ## [2026-10-04 19:48:31] - docs: summarize October feature set in CHANGELOG
 
+## [2026-10-04 20:30:38] - style: polish all hover and active states across the interface
+
