@@ -135,3 +135,5 @@
 
 ## [2026-10-04 10:42:00] - feat: add countdown timer helper for nearest upcoming premiere
 
+## [2026-10-04 11:24:07] - style: style premiere countdown badge with vibrant gradient
+
