@@ -157,3 +157,5 @@
 
 ## [2026-10-04 18:24:17] - style: refine toast animation slide and fade timing
 
+## [2026-10-04 19:06:24] - perf: prune unneeded CSS selectors from stylesheet
+
