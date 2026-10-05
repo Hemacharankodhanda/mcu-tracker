@@ -177,3 +177,5 @@
 
 ## [2026-10-05 14:48:55] - style: enhance card backdrop contrast on high dynamic range screens
 
+## [2026-10-05 15:36:06] - fix: handle edge case where runtime is TBD in card display
+
