@@ -173,3 +173,5 @@
 
 ## [2026-10-05 13:12:33] - docs: document casting announcements and production timelines
 
+## [2026-10-05 14:00:44] - refactor: optimize search indexing for multiverse character aliases
+
