@@ -181,3 +181,5 @@
 
 ## [2026-10-05 16:24:17] - perf: memoize expensive timeline node coordinates calculation
 
+## [2026-10-05 17:12:28] - style: refine animation curve for modal drawer opening
+
