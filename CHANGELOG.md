@@ -169,3 +169,5 @@
 
 ## [2026-10-05 11:36:11] - style: polish typography and badge alignment for Phase 6
 
+## [2026-10-05 12:24:22] - fix: correct expected premiere dates for Avengers: Doomsday
+
