@@ -179,3 +179,5 @@
 
 ## [2026-10-05 15:36:06] - fix: handle edge case where runtime is TBD in card display
 
+## [2026-10-05 16:24:17] - perf: memoize expensive timeline node coordinates calculation
+
