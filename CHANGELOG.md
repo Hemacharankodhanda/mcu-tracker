@@ -171,3 +171,5 @@
 
 ## [2026-10-05 12:24:22] - fix: correct expected premiere dates for Avengers: Doomsday
 
+## [2026-10-05 13:12:33] - docs: document casting announcements and production timelines
+
