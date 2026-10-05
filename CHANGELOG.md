@@ -187,3 +187,5 @@
 
 ## [2026-10-05 18:48:50] - style: adjust responsive padding on mobile landscape orientation
 
+## [2026-10-05 19:36:01] - docs: update troubleshooting section in context guide
+
