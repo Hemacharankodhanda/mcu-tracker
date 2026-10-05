@@ -183,3 +183,5 @@
 
 ## [2026-10-05 17:12:28] - style: refine animation curve for modal drawer opening
 
+## [2026-10-05 18:00:39] - fix: prevent body scroll when full-screen poster modal is open
+
