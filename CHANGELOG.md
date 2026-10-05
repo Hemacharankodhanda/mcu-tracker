@@ -175,3 +175,5 @@
 
 ## [2026-10-05 14:00:44] - refactor: optimize search indexing for multiverse character aliases
 
+## [2026-10-05 14:48:55] - style: enhance card backdrop contrast on high dynamic range screens
+
