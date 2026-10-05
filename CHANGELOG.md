@@ -185,3 +185,5 @@
 
 ## [2026-10-05 18:00:39] - fix: prevent body scroll when full-screen poster modal is open
 
+## [2026-10-05 18:48:50] - style: adjust responsive padding on mobile landscape orientation
+
