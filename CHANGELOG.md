@@ -203,3 +203,5 @@
 
 ## [2026-10-06 16:40:44] - style: polish success state animation for correct answers
 
+## [2026-10-06 18:00:55] - docs: add contributing guidelines for community trivia submissions
+
