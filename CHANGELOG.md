@@ -199,3 +199,5 @@
 
 ## [2026-10-06 14:00:22] - fix: resolve option selection tap delay on mobile Safari
 
+## [2026-10-06 15:20:33] - refactor: separate trivia dataset into independent JSON structure
+
