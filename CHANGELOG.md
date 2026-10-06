@@ -197,3 +197,5 @@
 
 ## [2026-10-06 12:40:11] - style: design question capsule with subtle neon border accent
 
+## [2026-10-06 14:00:22] - fix: resolve option selection tap delay on mobile Safari
+
