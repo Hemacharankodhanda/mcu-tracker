@@ -201,3 +201,5 @@
 
 ## [2026-10-06 15:20:33] - refactor: separate trivia dataset into independent JSON structure
 
+## [2026-10-06 16:40:44] - style: polish success state animation for correct answers
+
