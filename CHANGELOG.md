@@ -195,3 +195,5 @@
 
 ## [2026-10-06 11:20:00] - feat: implement interactive trivia teaser widget in footer
 
+## [2026-10-06 12:40:11] - style: design question capsule with subtle neon border accent
+
