@@ -205,3 +205,5 @@
 
 ## [2026-10-06 18:00:55] - docs: add contributing guidelines for community trivia submissions
 
+## [2026-10-06 19:20:06] - perf: defer trivia asset loading until viewport scroll threshold
+
