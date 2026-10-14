@@ -103,7 +103,7 @@ Because the project uses vanilla web technologies and localStorage, no build ser
    ```
    Then visit `http://localhost:3000`.
 
-*Note: To reset your progress entirely, clear your browser's local storage for the site.*
+
 
 ---
 
