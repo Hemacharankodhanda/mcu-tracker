@@ -107,13 +107,6 @@ Because the project uses vanilla web technologies and localStorage, no build ser
 
 ---
 
-## 🚀 Future Roadmap (Post-MVP)
-
-- **Phase 2:** Backend authentication via Supabase, server-synced data, global leaderboards, and a Character Hub.
-- **Phase 3:** Watch Party (group tracking), countdown timers for upcoming releases, and deeper polish/animations.
-
----
-
 ## ⚖️ Legal Disclaimer
 
 *This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company. No official logos, movie posters, or copyrighted character art are used within this repository. All synopses and quiz questions are originally written fan-created content.*
