@@ -245,6 +245,9 @@ function nextQuestion() {
     } else {
       saveQuizAttempt(quizState.currentCategory.id, quizState.score, quizState.questions.length);
     }
+    if (typeof checkBadges === 'function') {
+      checkBadges(true);
+    }
     quizState.mode = 'result';
     renderQuizPage();
   }

@@ -7,6 +7,12 @@
   <meta name="theme-color" content="#0B0B0F">
   <title>MCU Tracker — Watch Progress, Quizzes & Roadmaps</title>
   
+  <!-- Preconnect External CDNs for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://image.tmdb.org">
+  <link rel="preconnect" href="https://unpkg.com">
+
   <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
@@ -17,8 +23,10 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- Favicon (simple red square) -->
+  <!-- Favicon & PWA -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23ED1D24'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' font-weight='bold' fill='white'>M</text></svg>">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   
   <!-- Vercel Analytics -->
   <script>
@@ -99,6 +107,11 @@
         
         <div id="tracker-controls" class="tracker-controls"></div>
         <div id="tracker-list"></div>
+        
+        <div class="disclaimer">
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This product uses the TMDB API but is not endorsed or certified by TMDB.
+        </div>
       </section>
       
       <!-- ─── TIMELINE ─────────────────────────────────── -->
@@ -110,6 +123,11 @@
         
         <div id="timeline-controls" class="timeline-controls"></div>
         <div id="timeline-content"></div>
+        
+        <div class="disclaimer">
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This product uses the TMDB API but is not endorsed or certified by TMDB.
+        </div>
       </section>
       
       <!-- ─── QUIZZES ──────────────────────────────────── -->
@@ -120,6 +138,11 @@
         </div>
         
         <div id="quiz-content"></div>
+        
+        <div class="disclaimer">
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This product uses the TMDB API but is not endorsed or certified by TMDB.
+        </div>
       </section>
       
       <!-- ─── PROFILE ──────────────────────────────────── -->
@@ -147,8 +170,11 @@
   <script src="js/timeline.js"></script>
   <script src="js/quiz.js"></script>
   <script src="js/profile.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/upcoming.js"></script>
   <script src="js/details.js"></script>
   <script src="js/animations.js"></script>
+  <script src="js/pwa.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

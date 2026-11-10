@@ -40,8 +40,19 @@ async function initDetails(titleId) {
         <!-- Backdrop will be injected here -->
         <div class="details-hero__gradient"></div>
         <div class="details-hero__content">
-          <div class="details-hero__poster" style="background: ${getPhaseGradient(title.phase)}">
-            ${posterUrl ? `<img src="${posterUrl}" alt="${title.name} poster">` : ''}
+          <div class="details-hero__poster" style="background: ${getPhaseGradient(title.phase)}; position: relative; overflow: hidden; width: 140px; height: 210px;">
+            ${posterUrl ? `
+              <div class="skeleton-shimmer"></div>
+              <img src="${posterUrl}" 
+                   alt="${title.name} poster" 
+                   width="140" 
+                   height="210" 
+                   loading="lazy" 
+                   class="poster-img"
+                   onload="this.classList.add('loaded'); this.parentElement.querySelector('.skeleton-shimmer')?.remove();"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.skeleton-shimmer')?.remove();">
+            ` : ''}
+            <div class="poster-fallback-text">${title.name.split(':')[0]}</div>
           </div>
           <div class="details-hero__info">
             <h1 class="details-hero__title">${title.name}</h1>
@@ -115,7 +126,7 @@ async function initDetails(titleId) {
             return `
               <div class="cast-card">
                 <div class="cast-card__img" style="${!actor.profile_path ? 'background: var(--color-surface); padding: 12px; color: var(--color-text-muted)' : ''}">
-                  <img src="${profileUrl}" alt="${actor.name}" loading="lazy" style="${!actor.profile_path ? 'object-fit: contain' : ''}">
+                  <img src="${profileUrl}" alt="${actor.name}" width="64" height="64" loading="lazy" style="${!actor.profile_path ? 'object-fit: contain' : ''}">
                 </div>
                 <div class="cast-card__name">${actor.name}</div>
                 <div class="cast-card__character">${actor.character}</div>
@@ -131,6 +142,9 @@ async function initDetails(titleId) {
 
 function toggleWatchFromDetails(titleId) {
   const newStatus = cycleWatchStatus(titleId);
+  if (typeof checkBadges === 'function') {
+    checkBadges(true);
+  }
   const btn = document.getElementById('details-watch-btn');
   if (btn) {
     const icon = newStatus === 'unwatched' ? '○' : newStatus === 'watched' ? '✓' : '↻';

@@ -196,6 +196,15 @@ function renderDashboard() {
       </div>
     </div>
     
+    <!-- Upcoming Premiere -->
+    <div class="section" id="upcoming-releases-section">
+      <div class="section__header">
+        <h2 class="section__title">Next In The MCU</h2>
+        <span class="micro" style="color: var(--color-infinity-gold); font-weight: 600;">Upcoming Release</span>
+      </div>
+      <div id="upcoming-releases-content"></div>
+    </div>
+
     <!-- Saga Progress -->
     <div class="section">
       <div class="section__header">
@@ -229,6 +238,11 @@ function renderDashboard() {
       animateCounter('anim-streak', streak.current, 800);
     }
   }, 50);
+
+  // Render upcoming releases
+  if (typeof renderUpcomingReleases === 'function') {
+    renderUpcomingReleases();
+  }
 }
 
 function renderDashSagaProgress(sagaId) {
@@ -261,10 +275,26 @@ function renderMiniTitleCard(title) {
   const posterUrl = getPosterUrl(title.id);
   
   return `
-    <div class="card title-card card-compact">
-      <div class="title-card__poster" style="background: ${gradient}; width: 56px; height: 80px; font-size: 9px; position: relative; overflow: hidden;">
-        ${posterUrl ? `<img src="${posterUrl}" alt="${title.name} poster" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 1;" onerror="this.style.display='none';">` : ''}
-        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2px; z-index: 0;">${title.name.split(':')[0]}</div>
+    <div class="card title-card card-compact" 
+         onclick="navigateTo('details/${title.id}')"
+         tabindex="0"
+         role="button"
+         aria-label="${title.name}, released ${year}, Phase ${title.phase}"
+         onkeydown="if(event.key==='Enter'||event.key===' '){if(event.target===this){event.preventDefault();navigateTo('details/${title.id}');}}"
+         style="cursor: pointer;">
+      <div class="title-card__poster" style="background: ${gradient}; width: 56px; height: 80px; font-size: 9px; position: relative; overflow: hidden; flex-shrink: 0;">
+        ${posterUrl ? `
+          <div class="skeleton-shimmer"></div>
+          <img src="${posterUrl}" 
+               alt="${title.name} poster" 
+               width="56" 
+               height="80" 
+               loading="lazy" 
+               class="poster-img"
+               onload="this.classList.add('loaded'); this.parentElement.querySelector('.skeleton-shimmer')?.remove();"
+               onerror="this.style.display='none'; this.parentElement.querySelector('.skeleton-shimmer')?.remove();">
+        ` : ''}
+        <div class="poster-fallback-text" style="font-size: 9px; padding: 2px;">${title.name.split(':')[0]}</div>
       </div>
       <div class="title-card__info">
         <div class="title-card__name" style="font-size: var(--text-body)">${title.name}</div>
@@ -273,7 +303,11 @@ function renderMiniTitleCard(title) {
           <span>Phase ${title.phase}</span>
         </div>
       </div>
-      <button class="watch-chip ${statusClass}" onclick="dashToggleWatch('${title.id}')" style="flex-shrink:0">
+      <button class="watch-chip ${statusClass}" 
+              onclick="event.stopPropagation(); dashToggleWatch('${title.id}')" 
+              onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation(); event.preventDefault(); dashToggleWatch('${title.id}');}"
+              aria-label="Mark ${title.name} as ${statusLabel}"
+              style="flex-shrink:0">
         <span class="watch-chip__icon">${statusIcon}</span>
         ${statusLabel}
       </button>
@@ -283,6 +317,7 @@ function renderMiniTitleCard(title) {
 
 function dashToggleWatch(titleId) {
   cycleWatchStatus(titleId);
+  if (typeof checkBadges === 'function') checkBadges(true);
   renderDashboard();
 }
 
@@ -316,17 +351,23 @@ document.addEventListener('DOMContentLoaded', () => {
 // Progressive poster loading
 document.addEventListener('posterFetched', (e) => {
   const { titleId, url } = e.detail;
-  const imgHtml = `<img src="${url}" loading="lazy" alt="poster" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 1;" onerror="this.style.display='none';">`;
+  const imgHtml = `<img src="${url}" loading="lazy" alt="poster" class="poster-img loaded" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2;" onerror="this.style.display='none';">`;
   
   // Dashboard / Profile Cards
   const dashCards = document.querySelectorAll(`.card[onclick*="'${titleId}'"] .card__poster, .title-card[id="title-${titleId}"] .title-card__poster`);
   dashCards.forEach(container => {
-    if (!container.querySelector('img')) container.insertAdjacentHTML('beforeend', imgHtml);
+    if (!container.querySelector('img')) {
+      container.querySelector('.skeleton-shimmer')?.remove();
+      container.insertAdjacentHTML('beforeend', imgHtml);
+    }
   });
   
   // Timeline Sections
   const timelineSections = document.querySelectorAll(`.timeline-section[data-title-id="${titleId}"] .timeline-section__poster`);
   timelineSections.forEach(container => {
-    if (!container.querySelector('img')) container.insertAdjacentHTML('beforeend', imgHtml);
+    if (!container.querySelector('img')) {
+      container.querySelector('.skeleton-shimmer')?.remove();
+      container.insertAdjacentHTML('beforeend', imgHtml);
+    }
   });
 });

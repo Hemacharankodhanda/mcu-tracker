@@ -10,7 +10,9 @@ const STORAGE_KEYS = {
   QUIZ_SCORES: 'mcu_quiz_scores',
   STREAK: 'mcu_streak',
   DAILY_QUIZ: 'mcu_daily_quiz',
-  USERNAME: 'mcu_username'
+  USERNAME: 'mcu_username',
+  WATCH_ORDER: 'mcu_watch_order',
+  UNLOCKED_BADGES: 'mcu_unlocked_badges'
 };
 
 // ── Generic helpers ─────────────────────────────────────────
@@ -174,6 +176,39 @@ function setUsername(name) {
   localStorage.setItem(STORAGE_KEYS.USERNAME, name);
 }
 
+// ── Watch Order ─────────────────────────────────────────────
+
+function getWatchOrder() {
+  try {
+    const order = localStorage.getItem(STORAGE_KEYS.WATCH_ORDER);
+    return (order === 'chronological' || order === 'release') ? order : 'release';
+  } catch {
+    return 'release';
+  }
+}
+
+function setWatchOrder(order) {
+  try {
+    localStorage.setItem(STORAGE_KEYS.WATCH_ORDER, order);
+  } catch (e) {
+    console.warn('Storage write failed:', e);
+  }
+}
+
+// ── Badges Storage ──────────────────────────────────────────
+
+function getUnlockedBadges() {
+  const primary = storageGet(STORAGE_KEYS.UNLOCKED_BADGES, null);
+  if (primary && Array.isArray(primary)) return primary;
+  const legacy = storageGet('mcu_earned_badges', []);
+  return Array.isArray(legacy) ? legacy : [];
+}
+
+function setUnlockedBadges(badgeIds) {
+  storageSet(STORAGE_KEYS.UNLOCKED_BADGES, badgeIds);
+  storageSet('mcu_earned_badges', badgeIds);
+}
+
 // ── Stats Helpers ───────────────────────────────────────────
 
 function getWatchStats() {
@@ -182,26 +217,35 @@ function getWatchStats() {
   let watched = 0;
   let rewatched = 0;
   let totalRuntime = 0;
+  let totalCatalogRuntime = 0;
   
   MCU_TITLES.forEach(title => {
+    const rt = Number(title.runtime) || 0;
+    totalCatalogRuntime += rt;
     const status = statuses[title.id];
     if (status === 'watched' || status === 'rewatched') {
       watched++;
-      totalRuntime += title.runtime;
+      totalRuntime += rt;
     }
     if (status === 'rewatched') {
       rewatched++;
     }
   });
   
+  const runtimeRemaining = Math.max(0, totalCatalogRuntime - totalRuntime);
+
   return {
     totalTitles,
     watched,
     rewatched,
-    unwatched: totalTitles - watched,
+    unwatched: Math.max(0, totalTitles - watched),
     percentComplete: totalTitles > 0 ? Math.round((watched / totalTitles) * 100) : 0,
     totalRuntime,
-    hoursWatched: Math.round(totalRuntime / 60)
+    hoursWatched: Math.round(totalRuntime / 60),
+    totalCatalogRuntime,
+    totalCatalogHours: Math.round(totalCatalogRuntime / 60),
+    runtimeRemaining,
+    hoursRemaining: Math.round(runtimeRemaining / 60)
   };
 }
 
@@ -210,17 +254,25 @@ function getSagaStats(sagaId) {
   const statuses = getAllWatchStatuses();
   const total = titles.length;
   let watched = 0;
+  let runtimeWatched = 0;
+  let totalRuntime = 0;
   
   titles.forEach(t => {
+    const rt = Number(t.runtime) || 0;
+    totalRuntime += rt;
     if (statuses[t.id] === 'watched' || statuses[t.id] === 'rewatched') {
       watched++;
+      runtimeWatched += rt;
     }
   });
   
   return {
     total,
     watched,
-    percent: total > 0 ? Math.round((watched / total) * 100) : 0
+    percent: total > 0 ? Math.round((watched / total) * 100) : 0,
+    totalRuntime,
+    runtimeWatched,
+    runtimeRemaining: Math.max(0, totalRuntime - runtimeWatched)
   };
 }
 
@@ -229,17 +281,32 @@ function getPhaseStats(phase) {
   const statuses = getAllWatchStatuses();
   const total = titles.length;
   let watched = 0;
+  let rewatched = 0;
+  let runtimeWatched = 0;
+  let totalRuntime = 0;
   
   titles.forEach(t => {
+    const rt = Number(t.runtime) || 0;
+    totalRuntime += rt;
     if (statuses[t.id] === 'watched' || statuses[t.id] === 'rewatched') {
       watched++;
+      runtimeWatched += rt;
+    }
+    if (statuses[t.id] === 'rewatched') {
+      rewatched++;
     }
   });
   
   return {
+    phase,
     total,
     watched,
-    percent: total > 0 ? Math.round((watched / total) * 100) : 0
+    rewatched,
+    unwatched: Math.max(0, total - watched),
+    percent: total > 0 ? Math.round((watched / total) * 100) : 0,
+    totalRuntime,
+    runtimeWatched,
+    runtimeRemaining: Math.max(0, totalRuntime - runtimeWatched)
   };
 }
 

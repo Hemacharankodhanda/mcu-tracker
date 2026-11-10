@@ -107,6 +107,72 @@
   padding: var(--space-2);
   line-height: 1.2;
   overflow: hidden;
+  position: relative;
+  background-color: var(--color-surface-raised);
+}
+
+/* ── Poster Skeleton & Fallback ──────────────────────────── */
+.skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.25s ease-in;
+}
+
+.poster-img.loaded {
+  opacity: 1;
+}
+
+.poster-fallback-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  z-index: 0;
+  font-size: 11px;
+}
+
+.title-card:focus-visible {
+  outline: 2px solid var(--color-infinity-gold);
+  outline-offset: 2px;
+}
+
+.watch-chip:focus-visible {
+  outline: 2px solid var(--color-infinity-gold);
+  outline-offset: 2px;
+}
+
+.filter-btn:focus-visible,
+.order-toggle__btn:focus-visible {
+  outline: 2px solid var(--color-infinity-gold);
+  outline-offset: 1px;
 }
 
 .title-card__info {
@@ -695,9 +761,37 @@
   border: 2px solid var(--color-infinity-gold);
 }
 
+/* ── PWA Install Button ───────────────────────────────────── */
+.install-app-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-hero-red);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-tap);
+  box-shadow: 0 4px 14px rgba(237, 29, 36, 0.4);
+}
+
+.install-app-btn:hover {
+  background: #ff2a32;
+  transform: translateY(-1px);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .chip-pop, .chip-ripple {
+  .chip-pop, .chip-ripple, .skeleton-shimmer {
     animation: none !important;
+  }
+  .poster-img {
+    transition: none !important;
   }
   .badge-toast {
     transition: opacity 0.2s !important;

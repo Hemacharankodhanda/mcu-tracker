@@ -203,6 +203,120 @@
   flex-shrink: 0;
 }
 
+/* ── Upcoming Releases ────────────────────────────────────── */
+.upcoming-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.upcoming-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-hero-red), var(--color-infinity-gold));
+}
+
+.upcoming-card__hero {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.upcoming-card__poster {
+  width: 72px;
+  height: 108px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
+.upcoming-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.upcoming-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.upcoming-card__date {
+  font-size: var(--text-small);
+  color: var(--color-infinity-gold);
+  font-family: var(--font-mono);
+  margin-bottom: var(--space-2);
+}
+
+.countdown-grid {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.countdown-cell {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  text-align: center;
+  min-width: 58px;
+}
+
+.countdown-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-bold);
+  color: var(--color-hero-red);
+  line-height: 1.1;
+}
+
+.countdown-label {
+  font-size: var(--text-micro);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.upcoming-slate-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.upcoming-slate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+}
+
+.upcoming-slate-item span:first-child {
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+}
+
 
 /* ═══════════════════════════════════════════════════════════
    TRACKER
@@ -246,6 +360,110 @@
 .order-toggle__btn--active {
   background: var(--color-hero-red);
   color: #fff;
+}
+
+/* Tracker search */
+.tracker-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tracker-search-icon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--color-text-muted);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+}
+
+.tracker-search-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) calc(var(--space-4) + 26px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--text-body);
+  transition: border-color var(--transition-tap), box-shadow var(--transition-tap);
+}
+
+.tracker-search-input:focus {
+  outline: none;
+  border-color: var(--color-hero-red);
+  box-shadow: 0 0 0 2px rgba(237, 29, 36, 0.25);
+}
+
+.tracker-search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.tracker-search-clear {
+  position: absolute;
+  right: var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-tap);
+}
+
+.tracker-search-clear:hover {
+  color: var(--color-text-primary);
+}
+
+/* Tracker filters */
+.tracker-filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tracker-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.tracker-filter-label {
+  font-family: var(--font-display);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.tracker-filter-row {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.tracker-filter-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tracker-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--text-micro);
+  font-family: var(--font-mono);
 }
 
 /* Saga section in tracker */
