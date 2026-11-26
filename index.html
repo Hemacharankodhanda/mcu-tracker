@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MCU Tracker — Track your Marvel Cinematic Universe watch progress, explore interactive timelines, and test your knowledge with MCU quizzes.">
+  <meta name="description"
+    content="MCU Tracker — Track your Marvel Cinematic Universe watch progress, explore interactive timelines, and test your knowledge with MCU quizzes.">
   <meta name="theme-color" content="#0B0B0F">
+  <meta name="google-site-verification" content="M_IERiS4jC104b0X5HL4A3deRfvFoNxZVamIm7Sksas" />
   <title>MCU Tracker — Watch Progress, Quizzes & Roadmaps</title>
-  
+
   <!-- Preconnect External CDNs for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,69 +17,74 @@
   <link rel="preconnect" href="https://unpkg.com">
 
   <!-- Google Fonts: Direct load with display=swap (removes blocking CSS @import) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
   <!-- Production Bundle Stylesheet (single request instead of 5 separate stylesheets) -->
   <link rel="stylesheet" href="css/bundle.css">
-  
+
   <!-- Lucide Icons (pinned version without 302 redirect, non-blocking) -->
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js" defer></script>
-  
+
   <!-- Favicon & PWA -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23ED1D24'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' font-weight='bold' fill='white'>M</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23ED1D24'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' font-weight='bold' fill='white'>M</text></svg>">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  
+
   <!-- Vercel Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
+
 <body>
   <div class="app">
-    
+
     <!-- ══════════════════════════════════════════════════════
          NAVIGATION
          ══════════════════════════════════════════════════════ -->
     <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
       <!-- Brand (desktop only) -->
       <div class="nav-brand">
-        <div class="nav-brand__logo" onclick="toggleNavCollapse()" style="cursor: pointer;" title="Toggle navigation (Ctrl+B)">M</div>
+        <div class="nav-brand__logo" onclick="toggleNavCollapse()" style="cursor: pointer;"
+          title="Toggle navigation (Ctrl+B)">M</div>
         <div class="nav-brand__text" onclick="navigateTo('dashboard')" style="cursor: pointer;">MCU Tracker</div>
-        <button class="nav-collapse-btn" id="nav-collapse-btn" onclick="toggleNavCollapse()" aria-label="Toggle navigation" aria-expanded="true" title="Toggle navigation (Ctrl+B)">
+        <button class="nav-collapse-btn" id="nav-collapse-btn" onclick="toggleNavCollapse()"
+          aria-label="Toggle navigation" aria-expanded="true" title="Toggle navigation (Ctrl+B)">
           <i data-lucide="chevron-left" id="nav-collapse-icon"></i>
         </button>
       </div>
-      
+
       <a class="nav-item nav-item--active" data-page="dashboard" href="#dashboard" id="nav-dashboard" title="Home">
         <span class="nav-item__icon">
           <i data-lucide="home"></i>
         </span>
         <span class="nav-item__label">Home</span>
       </a>
-      
+
       <a class="nav-item" data-page="tracker" href="#tracker" id="nav-tracker" title="Tracker">
         <span class="nav-item__icon">
           <i data-lucide="check-square"></i>
         </span>
         <span class="nav-item__label">Tracker</span>
       </a>
-      
+
       <a class="nav-item" data-page="timeline" href="#timeline" id="nav-timeline" title="Timeline">
         <span class="nav-item__icon">
           <i data-lucide="route"></i>
         </span>
         <span class="nav-item__label">Timeline</span>
       </a>
-      
+
       <a class="nav-item" data-page="quizzes" href="#quizzes" id="nav-quizzes" title="Quizzes">
         <span class="nav-item__icon">
           <i data-lucide="help-circle"></i>
         </span>
         <span class="nav-item__label">Quizzes</span>
       </a>
-      
+
       <a class="nav-item" data-page="profile" href="#profile" id="nav-profile" title="Profile">
         <span class="nav-item__icon">
           <i data-lucide="user"></i>
@@ -85,13 +93,15 @@
       </a>
 
       <!-- Mobile collapse button -->
-      <button class="nav-collapse-mobile-btn" onclick="toggleNavCollapse()" aria-label="Hide navigation bar" title="Hide navigation bar">
+      <button class="nav-collapse-mobile-btn" onclick="toggleNavCollapse()" aria-label="Hide navigation bar"
+        title="Hide navigation bar">
         <i data-lucide="chevron-down"></i>
       </button>
     </nav>
 
     <!-- Mobile floating expand pill -->
-    <button class="mobile-nav-expand-btn" id="mobile-nav-expand-btn" onclick="toggleNavCollapse()" aria-label="Show navigation bar">
+    <button class="mobile-nav-expand-btn" id="mobile-nav-expand-btn" onclick="toggleNavCollapse()"
+      aria-label="Show navigation bar">
       <i data-lucide="menu" style="width: 14px; height: 14px;"></i>
       <span>Nav</span>
     </button>
@@ -100,70 +110,75 @@
          MAIN CONTENT
          ══════════════════════════════════════════════════════ -->
     <main class="main-content">
-      
+
       <!-- ─── DASHBOARD ────────────────────────────────── -->
       <section class="page page--active" id="page-dashboard" aria-label="Dashboard">
         <div id="dashboard-content"></div>
-        
+
         <div class="disclaimer">
-          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The
+          Walt Disney Company.<br>
           This product uses the TMDB API but is not endorsed or certified by TMDB.
         </div>
       </section>
-      
+
       <!-- ─── TRACKER ──────────────────────────────────── -->
       <section class="page" id="page-tracker" aria-label="Watch Tracker">
         <div class="page-header">
           <h1 class="page-header__title">Watch Tracker</h1>
           <p class="page-header__subtitle">Track your progress through the Marvel Cinematic Universe</p>
         </div>
-        
+
         <div id="tracker-controls" class="tracker-controls"></div>
         <div id="tracker-list"></div>
-        
+
         <div class="disclaimer">
-          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The
+          Walt Disney Company.<br>
           This product uses the TMDB API but is not endorsed or certified by TMDB.
         </div>
       </section>
-      
+
       <!-- ─── TIMELINE ─────────────────────────────────── -->
       <section class="page" id="page-timeline" aria-label="MCU Timeline">
         <div class="page-header">
           <h1 class="page-header__title">MCU Timeline</h1>
           <p class="page-header__subtitle">Explore the in-universe chronology and release history</p>
         </div>
-        
+
         <div id="timeline-controls" class="timeline-controls"></div>
         <div id="timeline-content"></div>
-        
+
         <div class="disclaimer">
-          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The
+          Walt Disney Company.<br>
           This product uses the TMDB API but is not endorsed or certified by TMDB.
         </div>
       </section>
-      
+
       <!-- ─── QUIZZES ──────────────────────────────────── -->
       <section class="page" id="page-quizzes" aria-label="Quizzes">
         <div class="page-header">
           <h1 class="page-header__title">MCU Quizzes</h1>
           <p class="page-header__subtitle">Test your Marvel knowledge and build your streak</p>
         </div>
-        
+
         <div id="quiz-content"></div>
-        
+
         <div class="disclaimer">
-          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The
+          Walt Disney Company.<br>
           This product uses the TMDB API but is not endorsed or certified by TMDB.
         </div>
       </section>
-      
+
       <!-- ─── PROFILE ──────────────────────────────────── -->
       <section class="page" id="page-profile" aria-label="Profile">
         <div id="profile-content"></div>
-        
+
         <div class="disclaimer">
-          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The Walt Disney Company.<br>
+          This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios or The
+          Walt Disney Company.<br>
           This product uses the TMDB API but is not endorsed or certified by TMDB.
         </div>
       </section>
@@ -171,7 +186,7 @@
       <section class="page" id="page-details" aria-label="Title Details">
         <div id="details-content"></div>
       </section>
-      
+
     </main>
   </div>
 
@@ -179,29 +194,31 @@
        ONBOARDING MODAL
        ══════════════════════════════════════════════════════ -->
   <div class="modal-overlay" id="onboarding-modal" role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
-    <div class="modal onboarding-card" style="max-width: 440px; text-align: center; border: 1px solid var(--color-border); box-shadow: 0 16px 40px rgba(0,0,0,0.6);">
-      <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--color-surface-raised); border: 2px solid var(--color-hero-red); margin: 0 auto var(--space-4); display: flex; align-items: center; justify-content: center;">
-        <span style="font-family: var(--font-display); font-size: 24px; color: var(--color-hero-red); font-weight: 700; line-height: 1;">M</span>
+    <div class="modal onboarding-card"
+      style="max-width: 440px; text-align: center; border: 1px solid var(--color-border); box-shadow: 0 16px 40px rgba(0,0,0,0.6);">
+      <div
+        style="width: 52px; height: 52px; border-radius: 50%; background: var(--color-surface-raised); border: 2px solid var(--color-hero-red); margin: 0 auto var(--space-4); display: flex; align-items: center; justify-content: center;">
+        <span
+          style="font-family: var(--font-display); font-size: 24px; color: var(--color-hero-red); font-weight: 700; line-height: 1;">M</span>
       </div>
-      
-      <h2 id="onboarding-title" style="font-family: var(--font-display); font-size: var(--text-2xl); letter-spacing: 0.05em; margin-bottom: var(--space-2); color: var(--color-text-primary);">Welcome, Hero</h2>
-      <p style="color: var(--color-text-secondary); font-size: var(--text-sm); line-height: 1.5; margin-bottom: var(--space-5);">
-        What should we call you? Enter your name or hero alias to personalize your tracker, journey stats, and shareable progress card.
+
+      <h2 id="onboarding-title"
+        style="font-family: var(--font-display); font-size: var(--text-2xl); letter-spacing: 0.05em; margin-bottom: var(--space-2); color: var(--color-text-primary);">
+        Welcome, Hero</h2>
+      <p
+        style="color: var(--color-text-secondary); font-size: var(--text-sm); line-height: 1.5; margin-bottom: var(--space-5);">
+        What should we call you? Enter your name or hero alias to personalize your tracker, journey stats, and shareable
+        progress card.
       </p>
 
       <form id="onboarding-form" onsubmit="submitOnboarding(event)">
         <div style="margin-bottom: var(--space-4); text-align: left;">
-          <label for="onboarding-name-input" class="micro" style="display: block; color: var(--color-text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Your Name / Alias</label>
-          <input 
-            type="text" 
-            id="onboarding-name-input" 
-            class="input" 
-            placeholder="e.g. Tony Stark, Wanda, Cap..." 
-            required 
-            maxlength="28" 
-            autocomplete="name" 
-            style="width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: var(--text-base); background: var(--color-surface-raised); border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-text-primary); outline: none;"
-          />
+          <label for="onboarding-name-input" class="micro"
+            style="display: block; color: var(--color-text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Your
+            Name / Alias</label>
+          <input type="text" id="onboarding-name-input" class="input" placeholder="e.g. Tony Stark, Wanda, Cap..."
+            required maxlength="28" autocomplete="name"
+            style="width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: var(--text-base); background: var(--color-surface-raised); border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-text-primary); outline: none;" />
         </div>
 
         <!-- Quick hero alias suggestions -->
@@ -213,12 +230,14 @@
           <button type="button" class="alias-chip" onclick="selectHeroAlias('Thor')">Thor</button>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: var(--text-base); font-weight: 600; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <button type="submit" class="btn btn-primary"
+          style="width: 100%; padding: 12px; font-size: var(--text-base); font-weight: 600; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: center; gap: 8px;">
           <span>Begin Journey</span>
           <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
         </button>
 
-        <button type="button" onclick="skipOnboarding()" style="background: none; border: none; color: var(--color-text-muted); font-size: var(--text-xs); margin-top: var(--space-3); cursor: pointer; text-decoration: underline; padding: 6px;">
+        <button type="button" onclick="skipOnboarding()"
+          style="background: none; border: none; color: var(--color-text-muted); font-size: var(--text-xs); margin-top: var(--space-3); cursor: pointer; text-decoration: underline; padding: 6px;">
           Continue as Avenger
         </button>
       </form>
@@ -228,4 +247,5 @@
   <!-- Consolidated Application Bundle (single request instead of 13 separate scripts) -->
   <script src="js/bundle.js" defer></script>
 </body>
+
 </html>
