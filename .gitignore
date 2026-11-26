@@ -1,3 +1,8 @@
 MCU-Tracker-PRD.md
 MCU-Tracker-design.md
 PROJECT-CONTEXT.md
+.env*
+.vercel
+node_modules/
+dist/
+
