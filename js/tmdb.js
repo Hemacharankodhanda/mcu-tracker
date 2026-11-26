@@ -6,6 +6,15 @@
 // User provided TMDB API key
 const TMDB_API_KEY = '9816fd193bb1751d9e634e1999380bd7';
 
+const POSTER_CACHE_KEY = 'mcu_poster_cache_v8';
+
+// Fallback high-res TMDB poster paths for immediate rendering
+const KNOWN_POSTERS = {
+  'black-widow': '/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg',
+  'werewolf-by-night': '/mvIvNKRIJPPS7WSFarFhOAGIVnU.jpg',
+  'echo': '/vFyJH630cF68LohVYjQW49074Sy.jpg'
+};
+
 async function fetchPostersFromTMDB() {
   if (TMDB_API_KEY === 'YOUR_API_KEY_HERE' || !TMDB_API_KEY) {
     console.warn('TMDB API Key missing. Skipping poster fetch.');
@@ -15,7 +24,7 @@ async function fetchPostersFromTMDB() {
   // Read existing cache
   let cache = {};
   try {
-    const raw = localStorage.getItem('mcu_poster_cache_v7');
+    const raw = localStorage.getItem(POSTER_CACHE_KEY);
     if (raw) cache = JSON.parse(raw);
   } catch(e) {}
   
@@ -46,13 +55,13 @@ async function fetchPostersFromTMDB() {
   }
   
   if (updated) {
-    localStorage.setItem('mcu_poster_cache_v7', JSON.stringify(cache));
+    localStorage.setItem(POSTER_CACHE_KEY, JSON.stringify(cache));
   }
 }
 
 function getPosterUrl(titleId) {
   try {
-    const raw = localStorage.getItem('mcu_poster_cache_v7');
+    const raw = localStorage.getItem(POSTER_CACHE_KEY);
     if (raw) {
       const cache = JSON.parse(raw);
       if (cache[titleId]) {
@@ -60,6 +69,9 @@ function getPosterUrl(titleId) {
       }
     }
   } catch(e) {}
+  if (KNOWN_POSTERS[titleId]) {
+    return `https://image.tmdb.org/t/p/w500${KNOWN_POSTERS[titleId]}`;
+  }
   return null;
 }
 

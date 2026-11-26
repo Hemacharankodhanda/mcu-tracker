@@ -71,6 +71,7 @@
   --gutter:            24px;
   --nav-height:        64px;
   --nav-width-desktop: 240px;
+  --nav-width-collapsed: 72px;
 
   /* ── Focus ──────────────────────────────────────────────── */
   --focus-ring: 2px solid var(--color-infinity-gold);

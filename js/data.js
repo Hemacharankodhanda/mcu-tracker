@@ -431,7 +431,7 @@ const MCU_TITLES = [
     runtime: 134,
     synopsis: 'Natasha Romanoff confronts the darker parts of her ledger when a dangerous conspiracy ties to her past as a spy.',
     postCreditCount: 1,
-    tmdbId: 215704,
+    tmdbId: 497698,
     tmdbType: 'movie'
   },
   {
@@ -596,7 +596,7 @@ const MCU_TITLES = [
     runtime: 53,
     synopsis: 'Monster hunters gather at Bloodstone Manor to compete for a powerful relic, but the night takes a dangerous turn.',
     postCreditCount: 0,
-    tmdbId: 949987,
+    tmdbId: 894205,
     tmdbType: 'movie'
   },
   {
@@ -718,7 +718,7 @@ const MCU_TITLES = [
     runtime: 300,
     synopsis: 'Maya Lopez must face her past, reconnect with her roots, and embrace the meaning of family as she fights the Kingpin.',
     postCreditCount: 0,
-    tmdbId: 209458,
+    tmdbId: 122226,
     tmdbType: 'tv'
   },
   {

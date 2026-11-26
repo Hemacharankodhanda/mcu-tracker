@@ -31,7 +31,7 @@ function generateProgressCardCanvas() {
   const ctx = canvas.getContext('2d');
 
   const watchStats = typeof getWatchStats === 'function' ? getWatchStats() : { watched: 0, totalTitles: 55, percentComplete: 0, totalRuntime: 0, hoursWatched: 0 };
-  const username = typeof getUsername === 'function' ? getUsername() : 'MCU Fan';
+  const username = typeof getUsername === 'function' ? getUsername() : 'Hero';
   const earnedBadges = typeof getUnlockedBadges === 'function' ? getUnlockedBadges() : [];
   const totalBadges = typeof BADGES !== 'undefined' ? BADGES.length : 15;
 
@@ -39,35 +39,10 @@ function generateProgressCardCanvas() {
   ctx.fillStyle = '#0B0B0F';
   ctx.fillRect(0, 0, width, height);
 
-  // Subtle radial glows
-  const redGlow = ctx.createRadialGradient(width * 0.85, 120, 10, width * 0.85, 120, 350);
-  redGlow.addColorStop(0, 'rgba(237, 29, 36, 0.18)');
-  redGlow.addColorStop(1, 'rgba(11, 11, 15, 0)');
-  ctx.fillStyle = redGlow;
-  ctx.fillRect(0, 0, width, height);
-
-  const goldGlow = ctx.createRadialGradient(100, height * 0.85, 10, 100, height * 0.85, 300);
-  goldGlow.addColorStop(0, 'rgba(201, 162, 39, 0.12)');
-  goldGlow.addColorStop(1, 'rgba(11, 11, 15, 0)');
-  ctx.fillStyle = goldGlow;
-  ctx.fillRect(0, 0, width, height);
-
   // Outer border & frame
-  ctx.strokeStyle = '#232636';
+  ctx.strokeStyle = '#2A2A34';
   ctx.lineWidth = 2;
-  drawRoundedRect(ctx, 30, 30, width - 60, height - 60, 20);
-  ctx.stroke();
-
-  // Top header red accent line
-  const gradLine = ctx.createLinearGradient(40, 30, width - 40, 30);
-  gradLine.addColorStop(0, '#ED1D24');
-  gradLine.addColorStop(0.5, '#C9A227');
-  gradLine.addColorStop(1, '#ED1D24');
-  ctx.strokeStyle = gradLine;
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.moveTo(50, 30);
-  ctx.lineTo(width - 50, 30);
+  drawRoundedRect(ctx, 30, 30, width - 60, height - 60, 12);
   ctx.stroke();
 
   // 2. Header Branding
@@ -325,7 +300,7 @@ function closeShareModal() {
 
 function downloadShareCard() {
   if (!shareCanvasInstance) generateProgressCardCanvas();
-  const username = typeof getUsername === 'function' ? getUsername() : 'mcu-fan';
+  const username = typeof getUsername === 'function' ? getUsername() : 'hero';
   const cleanName = username.toLowerCase().replace(/[^a-z0-9]/g, '-');
   const filename = `mcu-tracker-${cleanName}-progress.png`;
 
@@ -339,7 +314,7 @@ function downloadShareCard() {
 
 async function shareCardNative() {
   if (!shareCanvasInstance) generateProgressCardCanvas();
-  const username = typeof getUsername === 'function' ? getUsername() : 'MCU Fan';
+  const username = typeof getUsername === 'function' ? getUsername() : 'Hero';
   const stats = typeof getWatchStats === 'function' ? getWatchStats() : { percentComplete: 0 };
 
   if (typeof navigator !== 'undefined' && navigator.share) {

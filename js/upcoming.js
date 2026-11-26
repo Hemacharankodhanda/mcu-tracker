@@ -135,7 +135,7 @@ function renderUpcomingReleases() {
           <div class="upcoming-card__info">
             <div class="micro" style="color: var(--color-infinity-gold); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 2px;">Next Release</div>
             <h3 class="upcoming-card__title">${next.title}</h3>
-            <div class="upcoming-card__date">🗓️ ${dateFormatted}</div>
+            <div class="upcoming-card__date">${dateFormatted}</div>
             <p class="micro" style="color: var(--color-text-secondary); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
               ${next.overview || 'Upcoming MCU adventure coming to theatres.'}
             </p>

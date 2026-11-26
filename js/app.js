@@ -74,11 +74,11 @@ function renderDashboard() {
   const stats = getWatchStats();
   const quizStats = getQuizStats();
   const streak = getStreak();
-  const dailyStatus = getDailyQuizStatus();
   
   // Circular progress calculations
   const circumference = 2 * Math.PI * 68; // r=68
   const offset = circumference - (stats.percentComplete / 100) * circumference;
+  const userDisplayName = typeof getUsername === 'function' ? getUsername() : 'Hero';
   
   // Phase nodes on the circle
   const phaseNodes = [1, 2, 3, 4, 5, 6].map((p, i) => {
@@ -105,8 +105,8 @@ function renderDashboard() {
   container.innerHTML = `
     <!-- Hero -->
     <div class="hero">
-      <div class="hero__eyebrow rise-in rise-in-1">MCU Tracker</div>
-      <h1 class="hero__title rise-in rise-in-2">Your Marvel<br>Journey</h1>
+      <div class="hero__eyebrow rise-in rise-in-1">Welcome, <span id="dash-user-name">${escapeHtml(userDisplayName)}</span></div>
+      <h1 class="hero__title rise-in rise-in-2">${escapeHtml(userDisplayName)}'s Marvel<br>Journey</h1>
       <p class="hero__subtitle rise-in rise-in-3">Track, discover, and test your knowledge across the Marvel Cinematic Universe.</p>
       
       <div class="hero-progress rise-in rise-in-4">
@@ -165,34 +165,9 @@ function renderDashboard() {
           <div class="stat-card__label">Quizzes Taken</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__value mono"><span id="anim-streak">0</span>🔥</div>
+          <div class="stat-card__value mono"><span id="anim-streak">0</span><i data-lucide="flame" style="width:20px;height:20px;margin-left:4px;vertical-align:middle;color:var(--color-infinity-gold);"></i></div>
           <div class="stat-card__label">Day Streak</div>
         </div>
-      </div>
-    </div>
-    
-    <!-- Daily Quiz Banner -->
-    <div class="section">
-      <div class="section__header">
-        <h2 class="section__title">Daily Challenge</h2>
-      </div>
-      <div class="daily-banner" onclick="${dailyStatus ? '' : "navigateTo('quizzes'); setTimeout(() => startDailyQuiz(), 100)"}" 
-           id="dash-daily"
-           ${dailyStatus ? 'style="border-left-color: var(--color-success)"' : ''}>
-        <div class="daily-banner__icon"><i data-lucide="${dailyStatus ? 'check-circle' : 'zap'}"></i></div>
-        <div class="daily-banner__content">
-          <div class="daily-banner__title">${dailyStatus ? 'Challenge Complete!' : 'Today\'s Quiz'}</div>
-          <div class="daily-banner__subtitle">
-            ${dailyStatus 
-              ? `You scored ${dailyStatus.score}/${dailyStatus.total} today` 
-              : '5 questions to test your MCU knowledge'}
-          </div>
-        </div>
-        ${!dailyStatus ? `
-          <div class="daily-banner__action">
-            <span class="btn btn-primary btn-sm">Play</span>
-          </div>
-        ` : ''}
       </div>
     </div>
     
@@ -327,6 +302,134 @@ function getLatestTitles(count) {
     .slice(0, count);
 }
 
+// ── Collapsible Navigation ──────────────────────────────────
+const NAV_COLLAPSED_KEY = 'mcu_nav_collapsed';
+
+function isNavCollapsed() {
+  try {
+    return localStorage.getItem(NAV_COLLAPSED_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function setNavCollapsed(collapsed) {
+  try {
+    localStorage.setItem(NAV_COLLAPSED_KEY, collapsed ? 'true' : 'false');
+  } catch(e) {}
+}
+
+function initNavCollapse() {
+  const collapsed = isNavCollapsed();
+  applyNavCollapse(collapsed);
+
+  // Keyboard shortcut: Ctrl+B or Cmd+B to toggle nav collapse
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+      e.preventDefault();
+      toggleNavCollapse();
+    }
+  });
+}
+
+function toggleNavCollapse() {
+  const app = document.querySelector('.app');
+  if (!app) return;
+  const isCurrentlyCollapsed = app.classList.contains('nav--collapsed');
+  const next = !isCurrentlyCollapsed;
+  applyNavCollapse(next);
+  setNavCollapsed(next);
+}
+
+function applyNavCollapse(collapsed) {
+  const app = document.querySelector('.app');
+  if (!app) return;
+  app.classList.toggle('nav--collapsed', collapsed);
+
+  const btn = document.getElementById('nav-collapse-btn');
+  if (btn) {
+    btn.setAttribute('aria-expanded', !collapsed ? 'true' : 'false');
+    btn.setAttribute('title', collapsed ? 'Expand navigation (Ctrl+B)' : 'Collapse navigation (Ctrl+B)');
+  }
+
+  const icon = document.getElementById('nav-collapse-icon');
+  if (icon) {
+    icon.style.transform = collapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+// ── Onboarding ──────────────────────────────────────────────
+
+function checkOnboarding() {
+  if (typeof hasOnboarded === 'function' && !hasOnboarded()) {
+    showOnboardingModal();
+  }
+}
+
+function showOnboardingModal() {
+  const modal = document.getElementById('onboarding-modal');
+  const input = document.getElementById('onboarding-name-input');
+  if (modal) {
+    modal.classList.add('modal-overlay--visible');
+    if (input) {
+      setTimeout(() => input.focus(), 150);
+    }
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+}
+
+function selectHeroAlias(alias) {
+  const input = document.getElementById('onboarding-name-input');
+  if (input) {
+    input.value = alias;
+    input.focus();
+  }
+}
+
+function submitOnboarding(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const input = document.getElementById('onboarding-name-input');
+  const name = input ? input.value.trim() : '';
+  if (!name) return;
+  
+  if (typeof setOnboarded === 'function') {
+    setOnboarded(name);
+  } else if (typeof setUsername === 'function') {
+    setUsername(name);
+    localStorage.setItem('mcu_onboarded', 'true');
+  }
+  
+  const modal = document.getElementById('onboarding-modal');
+  if (modal) {
+    modal.classList.remove('modal-overlay--visible');
+  }
+  
+  if (currentPage === 'dashboard') {
+    renderDashboard();
+  } else if (currentPage === 'profile') {
+    renderProfile();
+  }
+}
+
+function skipOnboarding() {
+  if (typeof setOnboarded === 'function') {
+    setOnboarded('Avenger');
+  }
+  const modal = document.getElementById('onboarding-modal');
+  if (modal) {
+    modal.classList.remove('modal-overlay--visible');
+  }
+  if (currentPage === 'dashboard') {
+    renderDashboard();
+  }
+}
+
 // ── Init ────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -338,11 +441,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
+  // Initialize collapsible nav
+  initNavCollapse();
+
   // Handle hash changes
   window.addEventListener('hashchange', handleRoute);
   
   // Initial route
   handleRoute();
+  
+  // Check onboarding for first-time or un-named users
+  checkOnboarding();
   
   // Fetch posters in the background
   fetchPostersFromTMDB();

@@ -12,15 +12,30 @@ const STORAGE_KEYS = {
   DAILY_QUIZ: 'mcu_daily_quiz',
   USERNAME: 'mcu_username',
   WATCH_ORDER: 'mcu_watch_order',
-  UNLOCKED_BADGES: 'mcu_unlocked_badges'
+  UNLOCKED_BADGES: 'mcu_unlocked_badges',
+  ONBOARDED: 'mcu_onboarded'
 };
+
+// ── HTML Escaper ─────────────────────────────────────────────
+
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 // ── Generic helpers ─────────────────────────────────────────
 
 function storageGet(key, fallback = {}) {
   try {
     const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : fallback;
+    if (!data) return fallback;
+    const parsed = JSON.parse(data);
+    return parsed !== null && parsed !== undefined ? parsed : fallback;
   } catch {
     return fallback;
   }
@@ -166,14 +181,46 @@ function markDailyQuizDone(score, total) {
   updateStreak();
 }
 
-// ── Username ────────────────────────────────────────────────
+// ── Username & Onboarding ───────────────────────────────────
 
 function getUsername() {
-  return localStorage.getItem(STORAGE_KEYS.USERNAME) || 'MCU Fan';
+  try {
+    const val = localStorage.getItem(STORAGE_KEYS.USERNAME);
+    if (val && val.trim() && val !== 'MCU Fan') return val.trim();
+  } catch {}
+  return 'Hero';
 }
 
 function setUsername(name) {
-  localStorage.setItem(STORAGE_KEYS.USERNAME, name);
+  try {
+    const clean = (name || '').trim();
+    if (clean) {
+      localStorage.setItem(STORAGE_KEYS.USERNAME, clean);
+    }
+  } catch (e) {
+    console.warn('Storage write failed:', e);
+  }
+}
+
+function hasOnboarded() {
+  try {
+    const onboarded = localStorage.getItem(STORAGE_KEYS.ONBOARDED);
+    const user = localStorage.getItem(STORAGE_KEYS.USERNAME);
+    return onboarded === 'true' && !!user && user.trim() !== '' && user !== 'MCU Fan';
+  } catch {
+    return false;
+  }
+}
+
+function setOnboarded(name) {
+  try {
+    if (name && name.trim()) {
+      setUsername(name.trim());
+    }
+    localStorage.setItem(STORAGE_KEYS.ONBOARDED, 'true');
+  } catch (e) {
+    console.warn('Storage write failed:', e);
+  }
 }
 
 // ── Watch Order ─────────────────────────────────────────────

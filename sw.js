@@ -3,7 +3,7 @@
    Precaches app shell, stale-while-revalidate for TMDB posters
    ============================================================= */
 
-const CACHE_NAME = 'mcu-tracker-shell-v1';
+const CACHE_NAME = 'mcu-tracker-shell-v5';
 const POSTER_CACHE_NAME = 'mcu-tracker-posters-v1';
 
 const APP_SHELL = [
@@ -103,23 +103,19 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 3. App Shell: Cache-First with Network Fallback
+  // 3. App Shell: Network-First with Cache Fallback (always fresh online, works offline)
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
+    fetch(event.request).then((networkResponse) => {
+      if (event.request.method === 'GET' && networkResponse && networkResponse.status === 200 && url.origin === self.location.origin) {
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
       }
-      return fetch(event.request).then((networkResponse) => {
-        // Cache same-origin valid GET requests
-        if (event.request.method === 'GET' && networkResponse && networkResponse.status === 200 && url.origin === self.location.origin) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      }).catch(() => {
-        // Offline navigation fallback to index.html
+      return networkResponse;
+    }).catch(() => {
+      return caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) return cachedResponse;
         if (event.request.mode === 'navigate') {
           return caches.match('./index.html') || caches.match('./');
         }

@@ -103,7 +103,7 @@ function renderProfile() {
       <div class="profile-name" id="profile-name-display" onclick="editUsername()" style="cursor: pointer;" title="Click to edit name">
         ${escapeProfileText(username)}
       </div>
-      <div class="profile-subtitle">MCU Fan · Click name to edit</div>
+      <div class="profile-subtitle">${escapeProfileText(username)} · Click name to edit</div>
       
       <!-- Share button container (populated in Task 7) -->
       <div id="profile-share-container" style="margin-top: var(--space-4);"></div>
@@ -349,10 +349,13 @@ function renderSagaProgress(sagaId) {
 
 function editUsername() {
   const current = getUsername();
-  const name = prompt('Enter your display name:', current);
+  const name = prompt('Enter your name or hero alias:', current);
   if (name && name.trim()) {
     setUsername(name.trim());
     renderProfile();
+    // Update dashboard header if present
+    const dashHeroName = document.getElementById('dash-user-name');
+    if (dashHeroName) dashHeroName.textContent = name.trim();
   }
 }
 

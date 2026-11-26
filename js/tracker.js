@@ -5,8 +5,6 @@
 
 let currentOrder = typeof getWatchOrder === 'function' ? getWatchOrder() : 'release';
 let searchQuery = '';
-let currentPhase = 'all';   // 'all', '1', '2', '3', '4', '5', '6'
-let currentType = 'all';    // 'all', 'movie', 'series'
 let currentStatus = 'all';  // 'all', 'watched', 'unwatched'
 let lastToggledTitleId = null;
 let searchDebounceTimer = null;
@@ -22,80 +20,50 @@ function renderTrackerControls() {
   if (!controls) return;
   
   controls.innerHTML = `
-    <!-- Segmented Order Toggle -->
-    <div class="order-toggle" role="group" aria-label="Sort order">
-      <button class="order-toggle__btn ${currentOrder === 'release' ? 'order-toggle__btn--active' : ''}" 
-              onclick="setOrder('release')" 
-              id="order-release" 
-              aria-pressed="${currentOrder === 'release'}">Release Order</button>
-      <button class="order-toggle__btn ${currentOrder === 'chronological' ? 'order-toggle__btn--active' : ''}" 
-              onclick="setOrder('chronological')" 
-              id="order-chrono" 
-              aria-pressed="${currentOrder === 'chronological'}">Chronological Order</button>
+    <!-- Top Bar: Order Toggle + Search -->
+    <div class="tracker-top-row">
+      <div class="order-toggle" role="group" aria-label="Sort order">
+        <button class="order-toggle__btn ${currentOrder === 'release' ? 'order-toggle__btn--active' : ''}" 
+                onclick="setOrder('release')" 
+                id="order-release" 
+                aria-pressed="${currentOrder === 'release'}">Release Order</button>
+        <button class="order-toggle__btn ${currentOrder === 'chronological' ? 'order-toggle__btn--active' : ''}" 
+                onclick="setOrder('chronological')" 
+                id="order-chrono" 
+                aria-pressed="${currentOrder === 'chronological'}">Chronological Order</button>
+      </div>
+
+      <div class="tracker-search-wrap">
+        <span class="tracker-search-icon"><i data-lucide="search"></i></span>
+        <input type="search" 
+               class="tracker-search-input" 
+               id="tracker-search-input" 
+               placeholder="Search titles (e.g. Iron Man, Loki)..." 
+               value="${escapeTrackerText(searchQuery)}"
+               aria-label="Search titles"
+               oninput="onTrackerSearch(this.value)">
+        <button class="tracker-search-clear" 
+                id="tracker-search-clear" 
+                onclick="clearTrackerSearch()" 
+                aria-label="Clear search" 
+                style="display: ${searchQuery ? 'flex' : 'none'}">✕</button>
+      </div>
     </div>
 
-    <!-- Search Input -->
-    <div class="tracker-search-wrap">
-      <span class="tracker-search-icon"><i data-lucide="search"></i></span>
-      <input type="search" 
-             class="tracker-search-input" 
-             id="tracker-search-input" 
-             placeholder="Search titles (e.g. Iron Man, Loki)..." 
-             value="${escapeTrackerText(searchQuery)}"
-             aria-label="Search titles"
-             oninput="onTrackerSearch(this.value)">
-      <button class="tracker-search-clear" 
-              id="tracker-search-clear" 
-              onclick="clearTrackerSearch()" 
-              aria-label="Clear search" 
-              style="display: ${searchQuery ? 'flex' : 'none'}">✕</button>
-    </div>
-
-    <!-- Filter Chips -->
+    <!-- Filter Chips (Status) -->
     <div class="tracker-filters-container">
       <div class="tracker-filter-group">
-        <span class="tracker-filter-label">Phase</span>
-        <div class="tracker-filter-chips" role="group" aria-label="Filter by Phase">
-          <button class="filter-btn ${currentPhase === 'all' ? 'filter-btn--active' : ''}" 
-                  onclick="setPhaseFilter('all')" 
-                  aria-pressed="${currentPhase === 'all'}">All</button>
-          ${[1, 2, 3, 4, 5, 6].map(p => `
-            <button class="filter-btn ${currentPhase === String(p) ? 'filter-btn--active' : ''}" 
-                    onclick="setPhaseFilter('${p}')" 
-                    aria-pressed="${currentPhase === String(p)}">Phase ${p}</button>
-          `).join('')}
-        </div>
-      </div>
-      
-      <div class="tracker-filter-row">
-        <div class="tracker-filter-group" style="flex: 1; min-width: 170px;">
-          <span class="tracker-filter-label">Type</span>
-          <div class="tracker-filter-chips" role="group" aria-label="Filter by Type">
-            <button class="filter-btn ${currentType === 'all' ? 'filter-btn--active' : ''}" 
-                    onclick="setTypeFilter('all')" 
-                    aria-pressed="${currentType === 'all'}">All</button>
-            <button class="filter-btn ${currentType === 'movie' ? 'filter-btn--active' : ''}" 
-                    onclick="setTypeFilter('movie')" 
-                    aria-pressed="${currentType === 'movie'}">Movies</button>
-            <button class="filter-btn ${currentType === 'series' ? 'filter-btn--active' : ''}" 
-                    onclick="setTypeFilter('series')" 
-                    aria-pressed="${currentType === 'series'}">Series</button>
-          </div>
-        </div>
-        
-        <div class="tracker-filter-group" style="flex: 1; min-width: 170px;">
-          <span class="tracker-filter-label">Status</span>
-          <div class="tracker-filter-chips" role="group" aria-label="Filter by Status">
-            <button class="filter-btn ${currentStatus === 'all' ? 'filter-btn--active' : ''}" 
-                    onclick="setStatusFilter('all')" 
-                    aria-pressed="${currentStatus === 'all'}">All</button>
-            <button class="filter-btn ${currentStatus === 'watched' ? 'filter-btn--active' : ''}" 
-                    onclick="setStatusFilter('watched')" 
-                    aria-pressed="${currentStatus === 'watched'}">Watched</button>
-            <button class="filter-btn ${currentStatus === 'unwatched' ? 'filter-btn--active' : ''}" 
-                    onclick="setStatusFilter('unwatched')" 
-                    aria-pressed="${currentStatus === 'unwatched'}">Unwatched</button>
-          </div>
+        <span class="tracker-filter-label">Status</span>
+        <div class="tracker-filter-chips" role="group" aria-label="Filter by Status">
+          <button class="filter-btn ${currentStatus === 'all' ? 'filter-btn--active' : ''}" 
+                  onclick="setStatusFilter('all')" 
+                  aria-pressed="${currentStatus === 'all'}">All</button>
+          <button class="filter-btn ${currentStatus === 'watched' ? 'filter-btn--active' : ''}" 
+                  onclick="setStatusFilter('watched')" 
+                  aria-pressed="${currentStatus === 'watched'}">Watched</button>
+          <button class="filter-btn ${currentStatus === 'unwatched' ? 'filter-btn--active' : ''}" 
+                  onclick="setStatusFilter('unwatched')" 
+                  aria-pressed="${currentStatus === 'unwatched'}">Unwatched</button>
         </div>
       </div>
     </div>
@@ -141,18 +109,6 @@ function clearTrackerSearch() {
   renderTrackerList();
 }
 
-function setPhaseFilter(phase) {
-  currentPhase = phase;
-  renderTrackerControls();
-  renderTrackerList();
-}
-
-function setTypeFilter(type) {
-  currentType = type;
-  renderTrackerControls();
-  renderTrackerList();
-}
-
 function setStatusFilter(status) {
   currentStatus = status;
   renderTrackerControls();
@@ -161,8 +117,6 @@ function setStatusFilter(status) {
 
 function resetTrackerFilters() {
   searchQuery = '';
-  currentPhase = 'all';
-  currentType = 'all';
   currentStatus = 'all';
   renderTrackerControls();
   renderTrackerList();
@@ -174,17 +128,6 @@ function getFilteredTitles() {
   if (searchQuery.trim()) {
     const q = searchQuery.trim().toLowerCase();
     titles = titles.filter(t => t.name.toLowerCase().includes(q));
-  }
-
-  if (currentPhase !== 'all') {
-    const p = parseInt(currentPhase, 10);
-    titles = titles.filter(t => t.phase === p);
-  }
-
-  if (currentType === 'movie') {
-    titles = titles.filter(t => t.type === 'movie');
-  } else if (currentType === 'series') {
-    titles = titles.filter(t => t.type === 'series' || t.type === 'special');
   }
 
   if (currentStatus === 'watched') {
@@ -205,16 +148,17 @@ function renderTrackerList() {
   if (titles.length === 0) {
     container.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state__icon">🔍</div>
+        <div class="empty-state__icon"><i data-lucide="search" style="width:36px;height:36px;"></i></div>
         <div class="empty-state__text">No titles found</div>
         <p class="micro" style="color: var(--color-text-muted)">No MCU releases match your current search and filter criteria.</p>
         <button class="btn btn-secondary btn-sm" onclick="resetTrackerFilters()" style="margin-top: var(--space-4)">Reset Filters</button>
       </div>
     `;
+    if (window.lucide) lucide.createIcons();
     return;
   }
 
-  const isFiltered = searchQuery.trim() !== '' || currentPhase !== 'all' || currentType !== 'all' || currentStatus !== 'all';
+  const isFiltered = searchQuery.trim() !== '' || currentStatus !== 'all';
   const metaHtml = isFiltered ? `
     <div class="tracker-meta-bar" style="margin-bottom: var(--space-4)">
       <span>Showing ${titles.length} of ${MCU_TITLES.length} titles</span>
