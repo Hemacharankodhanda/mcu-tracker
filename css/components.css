@@ -45,6 +45,16 @@
   transform: scale(0.97);
 }
 
+.btn-github-star {
+  transition: all var(--transition-fast);
+}
+.btn-github-star:hover {
+  border-color: var(--color-infinity-gold) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: 0 0 16px rgba(245, 166, 35, 0.25);
+  transform: translateY(-1px);
+}
+
 .btn-sm {
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-micro);
