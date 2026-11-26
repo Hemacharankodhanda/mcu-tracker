@@ -5,4 +5,6 @@ PROJECT-CONTEXT.md
 .vercel
 node_modules/
 dist/
+.vscode/
+
 
