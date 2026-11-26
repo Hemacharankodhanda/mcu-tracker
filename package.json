@@ -1,5 +1,8 @@
 {
   "type": "module",
+  "scripts": {
+    "build": "node scripts/bundle.js"
+  },
   "dependencies": {
     "@vercel/analytics": "^2.0.1"
   }

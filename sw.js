@@ -3,31 +3,15 @@
    Precaches app shell, stale-while-revalidate for TMDB posters
    ============================================================= */
 
-const CACHE_NAME = 'mcu-tracker-shell-v7';
+const CACHE_NAME = 'mcu-tracker-shell-v8';
 const POSTER_CACHE_NAME = 'mcu-tracker-posters-v1';
 
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './css/variables.css',
-  './css/base.css',
-  './css/components.css',
-  './css/layout.css',
-  './css/pages.css',
-  './js/data.js',
-  './js/tmdb.js',
-  './js/storage.js',
-  './js/tracker.js',
-  './js/timeline.js',
-  './js/quiz.js',
-  './js/profile.js',
-  './js/share.js',
-  './js/upcoming.js',
-  './js/details.js',
-  './js/animations.js',
-  './js/pwa.js',
-  './js/app.js',
+  './css/bundle.css',
+  './js/bundle.js',
   './icons/icon-192.png',
   './icons/icon-512.png'
 ];

@@ -13,15 +13,14 @@
   <link rel="preconnect" href="https://image.tmdb.org">
   <link rel="preconnect" href="https://unpkg.com">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/pages.css">
+  <!-- Google Fonts: Direct load with display=swap (removes blocking CSS @import) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <!-- Production Bundle Stylesheet (single request instead of 5 separate stylesheets) -->
+  <link rel="stylesheet" href="css/bundle.css">
   
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lucide Icons (pinned version without 302 redirect, non-blocking) -->
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js" defer></script>
   
   <!-- Favicon & PWA -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23ED1D24'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' font-weight='bold' fill='white'>M</text></svg>">
@@ -226,19 +225,7 @@
     </div>
   </div>
 
-  <!-- Scripts (order matters: data → tmdb → storage → pages → app) -->
-  <script src="js/data.js"></script>
-  <script src="js/tmdb.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/tracker.js"></script>
-  <script src="js/timeline.js"></script>
-  <script src="js/quiz.js"></script>
-  <script src="js/profile.js"></script>
-  <script src="js/share.js"></script>
-  <script src="js/upcoming.js"></script>
-  <script src="js/details.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/pwa.js"></script>
-  <script src="js/app.js"></script>
+  <!-- Consolidated Application Bundle (single request instead of 13 separate scripts) -->
+  <script src="js/bundle.js" defer></script>
 </body>
 </html>
