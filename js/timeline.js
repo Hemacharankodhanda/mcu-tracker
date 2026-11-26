@@ -122,7 +122,7 @@ function renderTimeline() {
           <div class="timeline-section" id="tl-${title.id}" data-title-id="${title.id}" onclick="navigateTo('details/${title.id}')" style="cursor: pointer;">
             <div class="timeline-section__indicator ${statusClass}" id="ind-${title.id}"></div>
             <div class="timeline-section__poster" style="background: ${gradient}">
-              ${posterUrl ? `<img src="${posterUrl}" loading="lazy" alt="${title.name} poster" onerror="this.style.display='none';">` : ''}
+              ${posterUrl ? `<img src="${posterUrl}" loading="lazy" alt="${title.name} poster" class="poster-img loaded" onerror="this.style.display='none';">` : ''}
             </div>
             
             <div class="timeline-section__content">
