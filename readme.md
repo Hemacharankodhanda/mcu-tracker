@@ -1,275 +1,254 @@
-<p align="center">
-  <img src="icons/icon-192.png" alt="MCU Tracker" width="80" height="80" style="border-radius: 16px;" />
-</p>
+<div align="center">
+  <img src="icons/icon-192.png" alt="MCU Tracker Logo" width="84" height="84" />
+  <h1>MCU Tracker</h1>
+  <p>
+    <strong>The privacy-first companion app for the Marvel Cinematic Universe.</strong><br />
+    Track every film, series, and special — explore interactive timelines — test your trivia knowledge — unlock achievements.
+  </p>
 
-<h1 align="center">MCU Tracker</h1>
+  <p>
+    <a href="https://mcu-tracker-pi.vercel.app/">
+      <img src="https://img.shields.io/badge/Live_App-mcu--tracker--pi.vercel.app-E21B22?style=flat-square&logo=vercel&logoColor=white" alt="Live App on Vercel" />
+    </a>
+    <img src="https://img.shields.io/badge/Stack-Vanilla_HTML%2FCSS%2FJS-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="Vanilla JS" />
+    <img src="https://img.shields.io/badge/PWA-Offline_Ready-C9A227?style=flat-square&logo=pwa&logoColor=white" alt="PWA Ready" />
+    <img src="https://img.shields.io/badge/Accessibility-WCAG_AA-2FAE66?style=flat-square" alt="WCAG AA" />
+    <img src="https://img.shields.io/badge/Data-TMDB_API-01B4E4?style=flat-square&logo=themoviedatabase&logoColor=white" alt="TMDB API" />
+  </p>
 
-<p align="center">
-  <strong>The definitive companion app for the Marvel Cinematic Universe.</strong><br/>
-  Track every film, series, and special — explore interactive timelines — test your knowledge — earn achievements.
-</p>
-
-<p align="center">
-  <a href="https://mcu-tracker-pi.vercel.app/">Live App</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="#features">Features</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="#getting-started">Getting Started</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="#architecture">Architecture</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="#contributing">Contributing</a>
-</p>
-
-<br/>
+  <p>
+    <a href="https://mcu-tracker-pi.vercel.app/"><strong>Launch App</strong></a>
+    &nbsp;&middot;&nbsp;
+    <a href="#features">Features</a>
+    &nbsp;&middot;&nbsp;
+    <a href="#getting-started">Getting Started</a>
+    &nbsp;&middot;&nbsp;
+    <a href="#architecture">Architecture</a>
+    &nbsp;&middot;&nbsp;
+    <a href="#accessibility--performance">Performance</a>
+    &nbsp;&middot;&nbsp;
+    <a href="#contributing">Contributing</a>
+  </p>
+</div>
 
 ---
 
-## Why MCU Tracker?
+## Overview
 
-The MCU now spans **55+ titles** across films, Disney+ series, and specials. Keeping track of what you've watched, figuring out the right viewing order, and remembering where each story fits in the timeline shouldn't require a spreadsheet.
+Spanning **55 titles** across **6 Phases** and **2 Sagas** (**39 Movies**, **14 Series**, and **2 Specials**), keeping up with the Marvel Cinematic Universe shouldn't require juggling spreadsheets or ads-heavy wikis.
 
-MCU Tracker is a **free, privacy-first** web app that runs entirely in your browser. No account required. No data leaves your device. Just open the app, start tracking, and pick up right where you left off — on any device.
+**MCU Tracker** is a fast, zero-framework, installable Progressive Web App (PWA) designed with a restrained dark streaming aesthetic (`#0B0B0F`). Every watch status, star rating, quiz score, and achievement is stored locally in your browser — **no sign-up, no tracking accounts, and full offline support after your first visit**.
 
 ---
 
-<h2 id="features">Features</h2>
+## Features
 
-### Watch Tracker
-- Complete catalog of all MCU films, Disney+ series, and specials
-- Toggle between **Release Order** and **Chronological Order**
-- Three-state watch tracking: **Unwatched → Watched → Rewatched**
-- 1–5 star personal ratings for every title
-- Filter by watch status with instant search across all titles
-- TMDB-sourced high-resolution posters for every entry
+### Home Dashboard (`#dashboard`)
+- **Personalized Hero & Progress Ring:** Displays your chosen hero alias, overall MCU completion percentage, and per-phase milestone indicators around the progress ring.
+- **At-a-Glance Stats:** Animated counters for Titles Watched, Watch Time (hours), Quizzes Taken, and current Day Streak.
+- **Upcoming MCU Release Countdown:** Live countdown timer (days, hours, minutes) to the next theatrical premiere, backed by TMDB discovery with a 24-hour local cache and curated fallback slate.
+- **Saga Progress & Recent Releases:** Live progress bars for the *Infinity Saga* and *Multiverse Saga*, plus quick access to the latest releases.
 
-### Interactive Timeline
-- Full editorial timeline with scroll-driven reveal animations
-- Switch between **In-Universe Order** and **Release Order**
-- Phase and Saga groupings with per-phase completion tracking
-- Inline synopses, runtimes, and post-credit scene counts
+### Watch Tracker (`#tracker`)
+- **Dual Watch Orders:** Instant segmented toggle between **Release Order** and **Chronological Order**, persisted across sessions while sharing a single watch-state map keyed by title ID.
+- **Three-State Tracking:** Cycle effortlessly through **Unwatched (`○`) → Watched (`✓`) → Rewatched (`↻`)** with automatic rewatch counting.
+- **Instant Search & Filtering:** Debounced, case-insensitive title search paired with **Status** filters (`All`, `Watched`, `Unwatched`) and clear empty states.
+- **Personal Ratings:** 1–5 star ratings saved per title.
+- **Instant Posters:** All 55 verified TMDB poster paths bundled for immediate first-frame rendering with skeleton loaders and graceful fallbacks.
 
-### MCU Quizzes
-- **Daily Challenge** — 5 new questions every day with streak tracking
-- Category quizzes: General Knowledge, Guess the Villain, Guess the Quote, Phases & Sagas, Character Deep Dive
-- Score history and best-score tracking per category
+### Interactive Timeline (`#timeline`)
+- **Scroll-Driven Editorial Layout:** `IntersectionObserver`-powered reveal and active-focus transitions across all 55 titles.
+- **Order Switching:** Toggle between **In-Universe Order** and **Release Order**.
+- **Rich Context:** Phase and Saga groupings, release years, runtimes, post-credit scene counts, synopses, and inline watch toggles.
 
-### Profile & Stats
-- Personalized onboarding — set your name or hero alias on first visit
-- Overall completion ring with per-phase milestone indicators
-- Detailed per-phase progress bars with animated fill
-- Total runtime watched vs. remaining
-- **Shareable progress card** — generates a branded PNG on `<canvas>` with your stats, downloadable or shareable via the Web Share API
+### Title Details (`#details/<id>`)
+- **Deep TMDB Metadata:** Cast, crew, high-resolution backdrops, runtime, synopsis, post-credit count, and quick watch toggling for every title.
 
-### Achievements
-- 15 unlockable badges computed from your activity:
-  - *First Watch*, *Phase 1–6 Complete*, *50% Club*, *Completionist*, *7-Day Quiz Streak*, and more
-- Toast notifications on unlock
-- Locked/unlocked visual states on Profile
+### Quizzes & Trivia (`#quizzes`)
+- **Daily Challenge:** 5 fresh questions every day tied to your current and best **Day Streak**.
+- **5 Topic Categories:** *General MCU Knowledge*, *Guess the Villain*, *Guess the Quote*, *MCU Phases & Sagas*, and *Character Deep Dive*.
+- **Score Tracking:** Tracks attempts, averages, perfect scores, and best score per category.
 
-### Upcoming Releases
-- Live countdown to the next MCU premiere (days, hours, minutes)
-- Powered by TMDB data with a 24-hour cache and hardcoded fallback list
+### Profile, Achievements & Sharing (`#profile`)
+- **First-Visit Onboarding:** Prompts for your name or hero alias on launch (with quick-select hero suggestions) and personalizes your Dashboard, Profile, and Share Card. Click your profile name anytime to update it.
+- **Detailed Runtime & Phase Analytics:** Overall completion ring, total runtime watched vs. remaining, and animated progress bars for Phases 1–6.
+- **15 Unlockable Badges:** Computed automatically from your progress (*First Watch*, *Phase 1–6 Complete*, *50% Club*, *Completionist*, *Infinity Saga*, *Multiverse Saga*, *3-Day Streak*, *7-Day Quiz Streak*, *Perfect Score*, and *Quiz Master*) with unlock toast notifications.
+- **Shareable Progress Card:** Renders a custom 800×1000 PNG summary card natively on `<canvas>` (no external libraries) with one-click **Download PNG** and **Web Share API** support where available.
 
-### Progressive Web App
-- **Installable** on desktop and mobile (Add to Home Screen)
-- **Offline-capable** — full app shell cached via Service Worker
-- Stale-while-revalidate caching for TMDB poster images
-- Standalone display with native app-like experience
-
-### Accessibility & Performance
-- Full keyboard navigation with visible focus indicators
-- ARIA labels and semantic HTML throughout
-- Respects `prefers-reduced-motion` for all animations
-- WCAG AA color contrast compliance
-- Lazy-loaded images with skeleton loaders and graceful fallbacks
-- Targeting Lighthouse 90+ across Performance, Accessibility, Best Practices, and SEO
+### Collapsible Navigation & PWA
+- **Responsive Navigation:** Collapsible desktop sidebar (`Ctrl+B` shortcut) and collapsible mobile bottom bar with persistent state.
+- **Installable App:** `manifest.webmanifest` (`standalone` mode, `#0B0B0F` theme color, `192×192` & `512×512` icons) with an **Install App** trigger on `beforeinstallprompt`.
+- **Offline Ready:** Service Worker (`sw.js`) precaches the app shell using a Network-First strategy (with Cache Fallback) and serves TMDB posters via Stale-While-Revalidate.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
+| Layer | Implementation |
 |---|---|
-| **Frontend** | Vanilla HTML5, CSS3, JavaScript (ES6) — zero frameworks, zero build tools |
-| **Persistence** | `localStorage` — all data stays on-device |
-| **Routing** | Hash-based SPA router (`#dashboard`, `#tracker`, `#timeline`, `#quizzes`, `#profile`) |
-| **Posters & Data** | [TMDB API](https://www.themoviedb.org/) with client-side caching |
-| **Icons** | [Lucide Icons](https://lucide.dev/) via CDN |
-| **Typography** | Barlow Condensed · Inter · JetBrains Mono (Google Fonts) |
-| **PWA** | `manifest.webmanifest` + Service Worker with precached app shell |
-| **Hosting** | [Vercel](https://vercel.com/) |
+| **Core** | Vanilla HTML5, CSS3, JavaScript (ES6) — zero UI frameworks, zero build step |
+| **State & Persistence** | Browser `localStorage` & `sessionStorage` — 100% client-side, zero backend required |
+| **Routing** | Hash-based SPA router (`#dashboard`, `#tracker`, `#timeline`, `#quizzes`, `#profile`, `#details/<id>`) |
+| **Media & Metadata** | [TMDB API](https://www.themoviedb.org/) with bundled poster mapping + 24h upcoming release cache |
+| **Graphics & Sharing** | Native HTML5 `<canvas>` generator + Web Share API |
+| **Icons & Fonts** | [Lucide Icons](https://lucide.dev/), Barlow Condensed, Inter, JetBrains Mono |
+| **PWA & Caching** | Web App Manifest + Service Worker (`sw.js`) |
+| **Deployment** | [Vercel](https://vercel.com/) |
 
 ---
 
-<h2 id="getting-started">Getting Started</h2>
+## Getting Started
 
-### Use it now
+### Use Online
 
-**[→ Open MCU Tracker](https://mcu-tracker-pi.vercel.app/)**
+Open the live deployment directly in any modern desktop or mobile browser:
+**[https://mcu-tracker-pi.vercel.app/](https://mcu-tracker-pi.vercel.app/)**
 
-No sign-up. No install. Works in any modern browser.
+### Run Locally
 
-### Run locally
+Because the application ships pure static HTML, CSS, and JS with no build pipeline, you can serve the directory directly with any static HTTP server (recommended so Service Worker and ES/asset paths resolve cleanly):
 
-The project is entirely static — no build step, no `npm install` required.
-
-**Option A — Open directly**
-```
-Open index.html in any modern browser.
-```
-
-**Option B — Local dev server**
 ```bash
+# 1. Clone the repository
+git clone https://github.com/Hemacharankodhanda/mcu-tracker.git
+cd mcu-tracker
+
+# 2. Serve locally (choose any static server)
 npx serve .
-# → http://localhost:3000
+# -> http://localhost:3000
 ```
 
-**Option C — Python**
+Or with Python:
+
 ```bash
 python -m http.server 8000
-# → http://localhost:8000
+# -> http://localhost:8000
 ```
 
-> **Note:** A TMDB API key is included for poster fetching. For production forks, replace it with your own key from [themoviedb.org](https://www.themoviedb.org/settings/api) and consider proxying requests through a serverless function (e.g., Vercel API Routes) to avoid client-side key exposure.
+> **Security Note for Production Forks:** `js/tmdb.js` and `js/upcoming.js` query the TMDB v3 API directly from the browser using a client-side API key. If you fork this project for high-traffic production use and want to keep your TMDB key private, consider routing TMDB requests through a lightweight Vercel Serverless Function proxy (`/api/tmdb`) rather than exposing the key client-side.
 
 ---
 
-<h2 id="architecture">Architecture</h2>
+## Architecture
 
 ### Project Structure
 
-```
-marvel-tracker/
-├── index.html                 # Single-page application shell
-├── manifest.webmanifest       # PWA manifest
-├── sw.js                      # Service Worker (precache + poster caching)
+```text
+mcu-tracker/
+├── index.html                 # App shell, navigation, SPA sections & onboarding modal
+├── manifest.webmanifest       # PWA manifest (standalone, theme #0B0B0F, icons)
+├── sw.js                      # Service Worker (app shell precache + TMDB poster caching)
+├── package.json               # Optional Vercel Analytics dependency metadata
+├── update_data.js             # Utility script used to map TMDB IDs into data.js
 │
 ├── css/
-│   ├── variables.css          # Design tokens (colors, typography, spacing)
-│   ├── base.css               # Reset, global styles
-│   ├── components.css         # Reusable UI components
-│   ├── layout.css             # Navigation, page container, responsive grid
-│   └── pages.css              # Page-specific styles (tracker, timeline, quiz, profile)
+│   ├── variables.css          # Design tokens (palette, typography scale, spacing)
+│   ├── base.css               # CSS reset, accessibility focus styles, base rules
+│   ├── components.css         # Cards, chips, modals, progress rings, skeleton loaders
+│   ├── layout.css             # Collapsible sidebar/bottom nav & responsive page layout
+│   └── pages.css              # Page-specific styles (Dashboard, Tracker, Timeline, Quiz, Profile)
 │
 ├── js/
-│   ├── data.js                # MCU title catalog (55 titles) + quiz question bank
-│   ├── tmdb.js                # TMDB API integration + poster cache + known poster map
-│   ├── storage.js             # localStorage abstraction (all read/write operations)
-│   ├── tracker.js             # Watch Tracker page (filters, search, ordering)
-│   ├── timeline.js            # Interactive Timeline (IntersectionObserver, scroll behavior)
-│   ├── quiz.js                # Quiz engine (daily challenge, categories, scoring)
-│   ├── profile.js             # Profile page (stats, badges, phase bars)
-│   ├── share.js               # Canvas-based progress card generation + Web Share API
-│   ├── upcoming.js            # Upcoming releases with live countdown
-│   ├── details.js             # Title detail view (cast, crew, backdrop)
-│   ├── animations.js          # Animated counter utilities
-│   ├── pwa.js                 # Service Worker registration + install prompt
-│   └── app.js                 # SPA router, dashboard, navigation, onboarding
+│   ├── data.js                # Catalog of 55 MCU titles + 5 quiz categories & questions
+│   ├── tmdb.js                # TMDB poster & details fetching, cache & known poster map
+│   ├── storage.js             # localStorage abstraction, watch stats & HTML escaping
+│   ├── tracker.js             # Watch Tracker (Release/Chronological order, search, status filter)
+│   ├── timeline.js            # Editorial Timeline (IntersectionObserver & scroll reveal)
+│   ├── quiz.js                # Daily Challenge & category quiz engine
+│   ├── profile.js             # Profile stats, runtime breakdown & 15 achievement badges
+│   ├── share.js               # Native <canvas> progress card renderer, PNG export & Web Share
+│   ├── upcoming.js            # Upcoming MCU release countdown + 24h TMDB cache
+│   ├── details.js             # Title detail view (cast, crew, backdrop, post-credits)
+│   ├── animations.js          # Counter & progress bar animations
+│   ├── pwa.js                 # Service Worker registration & install prompt UI
+│   └── app.js                 # Hash router, Dashboard, collapsible nav & onboarding flow
 │
 └── icons/
-    ├── icon.svg               # Source icon
-    ├── icon-192.png            # PWA icon (192×192)
-    └── icon-512.png            # PWA icon (512×512)
+    ├── icon.svg               # Vector source icon
+    ├── icon-192.png            # PWA icon (192x192)
+    └── icon-512.png            # PWA icon (512x512)
 ```
 
-### Data Persistence
+### Local Storage Schema
 
-All user data is stored in `localStorage` under namespaced keys:
+All user progress is persisted locally under stable keys:
 
-| Key | Purpose |
-|---|---|
-| `mcu_watch_status` | Watch state per title (`unwatched` / `watched` / `rewatched`) |
-| `mcu_ratings` | 1–5 star ratings per title |
-| `mcu_rewatch` | Rewatch count per title |
-| `mcu_username` | User's display name or hero alias |
-| `mcu_onboarded` | Whether onboarding has been completed |
-| `mcu_watch_order` | Preferred sort order (`release` / `chronological`) |
-| `mcu_quiz_scores` | Quiz attempt history (category, score, date) |
-| `mcu_daily_quiz` | Daily quiz completion log |
-| `mcu_streak` | Current and best quiz streak |
-| `mcu_unlocked_badges` | Array of earned badge IDs |
-
-### Design System
-
-The visual language is intentionally cinematic and restrained — no comic-book clichés, no halftones, no gratuitous gradients.
-
-| Token | Value | Usage |
+| Key | Type | Description |
 |---|---|---|
-| `--color-void` | `#0B0B0F` | Primary background |
-| `--color-surface` | `#16161D` | Card and panel backgrounds |
-| `--color-hero-red` | `#E21B22` | Actions, watched state, primary buttons |
-| `--color-infinity-gold` | `#C9A227` | Achievements, rewards, phase indicators |
-| `--color-text-primary` | `#F5F5F7` | Headings and primary content |
-| `--color-text-secondary` | `#9B9BA5` | Supporting text |
-| `--color-border` | `#2A2A34` | Subtle dividers and card borders |
+| `mcu_watch_status` | `JSON Object` | Per-title watch state (`unwatched` \| `watched` \| `rewatched`) |
+| `mcu_ratings` | `JSON Object` | Per-title 1–5 star ratings |
+| `mcu_rewatch` | `JSON Object` | Per-title rewatch counts |
+| `mcu_username` | `String` | User's chosen name or hero alias |
+| `mcu_onboarded` | `String` | Onboarding completion flag (`"true"`) |
+| `mcu_watch_order` | `String` | Selected Tracker order (`"release"` \| `"chronological"`) |
+| `mcu_quiz_scores` | `JSON Array` | Quiz attempt history (`categoryId`, `score`, `total`, `date`) |
+| `mcu_daily_quiz` | `JSON Object` | Daily Challenge completion log keyed by `YYYY-MM-DD` |
+| `mcu_streak` | `JSON Object` | Current streak, best streak, and last active date |
+| `mcu_unlocked_badges` | `JSON Array` | Unlocked achievement badge IDs |
+| `mcu_nav_collapsed` | `String` | Navigation bar collapse state (`"true"` \| `"false"`) |
+| `mcu_poster_cache_v8` | `JSON Object` | Cached TMDB poster paths keyed by title ID |
+| `mcu_upcoming_cache_v2` | `JSON Object` | Cached upcoming MCU releases with 24-hour TTL |
 
-**Typography:** Barlow Condensed (display), Inter (body), JetBrains Mono (stats & numerals).
+### Design Tokens
+
+MCU Tracker avoids loud comic-book clichés in favor of a focused, cinema-grade dark UI:
+
+| Token | Hex | Role |
+|---|---|---|
+| `--color-void` | `#0B0B0F` | Primary canvas & PWA theme color |
+| `--color-surface` | `#16161D` | Elevated card & panel surfaces |
+| `--color-surface-raised` | `#1F1F29` | Interactive controls & modal fields |
+| `--color-hero-red` | `#E21B22` | Primary actions, watched state & active indicators |
+| `--color-infinity-gold` | `#C9A227` | Achievements, star ratings, streaks & rewatched accents |
+| `--color-text-primary` | `#F5F5F7` | Primary headings & copy |
+| `--color-text-secondary` | `#9B9BA5` | Secondary metadata |
+| `--color-text-muted` | `#8A8A96` | Captions & labels (WCAG AA compliant) |
+| `--color-border` | `#2A2A34` | Hairline dividers & container borders |
+
+---
+
+## Accessibility & Performance
+
+- **Keyboard Navigation:** Full keyboard support across navigation, filters, title cards, and `Enter` / `Space` watch toggles with clear focus rings.
+- **Screen Readers:** Semantic landmarks (`<nav>`, `<main>`, `<section>`), `aria-label`, `aria-pressed`, `aria-modal`, and `role` attributes.
+- **Reduced Motion:** Honors `@media (prefers-reduced-motion: reduce)` across animations, progress bars, and timeline transitions.
+- **Contrast & Layout Stability:** WCAG AA contrast palette (`#8A8A96`+ on `#0B0B0F`/`#16161D`), explicit image dimensions (`width` / `height`), `loading="lazy"`, and shimmer skeletons to prevent layout shift.
 
 ---
 
 ## Browser Support
 
-| Browser | Minimum Version |
+| Browser | Supported Versions |
 |---|---|
-| Chrome / Edge | 90+ |
-| Firefox | 90+ |
-| Safari | 15+ |
-| Mobile Safari (iOS) | 15+ |
-| Chrome for Android | 90+ |
+| Google Chrome / Microsoft Edge | 90+ (Desktop & Android) |
+| Mozilla Firefox | 90+ |
+| Apple Safari | 15+ (macOS & iOS) |
 
 ---
 
-<h2 id="contributing">Contributing</h2>
+## Contributing
 
-Contributions are welcome. Please keep the following constraints in mind:
+Contributions, bug reports, and catalog updates for upcoming MCU phases are welcome.
 
-1. **No frameworks or build tools.** The project is intentionally vanilla HTML/CSS/JS.
-2. **No external runtime dependencies.** CDN-loaded assets (fonts, icons) are acceptable; npm packages are not.
-3. **Preserve the existing `localStorage` keys.** Users should never lose their data after an update.
-4. **Maintain WCAG AA compliance.** All text must meet minimum contrast ratios; interactive elements must be keyboard-accessible.
-5. **Test across pages.** Changes to shared modules (`storage.js`, `tmdb.js`, `data.js`) affect every section of the app.
-
-### Local Development
-
-```bash
-# Clone the repository
-git clone https://github.com/YOUR_USERNAME/marvel-tracker.git
-cd marvel-tracker
-
-# Start a local server
-npx serve .
-
-# Open in browser
-# → http://localhost:3000
-```
-
----
-
-## Roadmap
-
-- [ ] Vercel serverless proxy for TMDB API key
-- [ ] Cloud sync (optional sign-in to back up progress)
-- [ ] Social sharing — compare progress with friends
-- [ ] Spoiler-free mode for newcomers
-- [ ] Multi-language support
-- [ ] Advanced stats (average rating, genre breakdown, director stats)
+1. Fork the repository and create a feature branch (`git checkout -b feat/your-feature`).
+2. Keep the codebase **pure vanilla HTML, CSS, and JS** — do not introduce frameworks or build steps.
+3. **Never rename or break existing `localStorage` keys** (`mcu_watch_status`, `mcu_ratings`, etc.) so returning users keep their history intact.
+4. Ensure any new UI meets **WCAG AA contrast** and supports keyboard navigation + `prefers-reduced-motion`.
+5. Verify all sections (`#dashboard`, `#tracker`, `#timeline`, `#quizzes`, `#profile`, `#details`) load with **zero browser console errors** before opening a pull request.
 
 ---
 
 ## Acknowledgements
 
-- **[TMDB](https://www.themoviedb.org/)** — This product uses the TMDB API but is not endorsed or certified by TMDB. Poster images, cast data, and release information are sourced from their public API.
-- **[Lucide](https://lucide.dev/)** — Beautiful, consistent open-source icons.
-- **[Google Fonts](https://fonts.google.com/)** — Barlow Condensed, Inter, and JetBrains Mono typefaces.
-- **[Vercel](https://vercel.com/)** — Hosting and deployment.
-
----
-
-## License
-
-This project is open source under the [MIT License](LICENSE).
+- **[TMDB](https://www.themoviedb.org/)** — Movie & series posters, cast, crew, backdrops, and upcoming release data. *This product uses the TMDB API but is not endorsed or certified by TMDB.*
+- **[Lucide](https://lucide.dev/)** — Clean open-source iconography.
+- **[Google Fonts](https://fonts.google.com/)** — *Barlow Condensed*, *Inter*, and *JetBrains Mono*.
+- **[Vercel](https://vercel.com/)** — Production hosting and deployment.
 
 ---
 
 <p align="center">
   <sub>
-    <strong>Disclaimer:</strong> This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios, The Walt Disney Company, or any of their subsidiaries. No official logos, movie posters, or copyrighted character art are stored in this repository. All synopses and quiz questions are originally written fan-created content. TMDB poster images are fetched at runtime via their public API and are not bundled with this project.
+    <strong>Disclaimer:</strong> This is an unofficial fan project. Not affiliated with, endorsed by, or sponsored by Marvel Studios, The Walt Disney Company, or any of their subsidiaries. No copyrighted media is stored in this repository; poster artwork and metadata are retrieved at runtime from TMDB, and all quiz questions and editorial synopses are fan-written.
   </sub>
 </p>
