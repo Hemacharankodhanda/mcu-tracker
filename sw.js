@@ -3,7 +3,7 @@
    Precaches app shell, stale-while-revalidate for TMDB posters
    ============================================================= */
 
-const CACHE_NAME = 'mcu-tracker-shell-v6';
+const CACHE_NAME = 'mcu-tracker-shell-v7';
 const POSTER_CACHE_NAME = 'mcu-tracker-posters-v1';
 
 const APP_SHELL = [
@@ -57,8 +57,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Bypass analytics / insights
-  if (url.pathname.includes('/_vercel/')) {
+  // Bypass analytics / insights and serverless API proxy routes
+  if (url.pathname.includes('/_vercel/') || url.pathname.startsWith('/api/')) {
     return;
   }
 

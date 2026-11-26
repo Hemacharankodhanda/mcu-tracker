@@ -46,35 +46,33 @@ async function getUpcomingReleases() {
     console.warn('Error reading upcoming cache:', e);
   }
 
-  // 2. Fetch from TMDB if API key available
-  if (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY && TMDB_API_KEY !== 'YOUR_API_KEY_HERE') {
-    try {
-      const today = new Date().toISOString().split('T')[0];
-      const url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`;
-      const res = await fetch(url);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.results && data.results.length > 0) {
-          const formatted = data.results.slice(0, 5).map(m => ({
-            id: m.id,
-            title: m.title,
-            release_date: m.release_date,
-            poster_path: m.poster_path,
-            overview: m.overview
-          }));
-          localStorage.setItem(UPCOMING_CACHE_KEY, JSON.stringify({
-            timestamp: Date.now(),
-            data: formatted
-          }));
-          return formatted;
-        }
+  // 2. Fetch from TMDB via /api/tmdb serverless proxy
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const url = `/api/tmdb?path=discover/movie&with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`;
+    const res = await fetch(url);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.results && data.results.length > 0) {
+        const formatted = data.results.slice(0, 5).map(m => ({
+          id: m.id,
+          title: m.title,
+          release_date: m.release_date,
+          poster_path: m.poster_path,
+          overview: m.overview
+        }));
+        localStorage.setItem(UPCOMING_CACHE_KEY, JSON.stringify({
+          timestamp: Date.now(),
+          data: formatted
+        }));
+        return formatted;
       }
-    } catch (err) {
-      console.warn('Failed to fetch upcoming TMDB releases:', err);
     }
+  } catch (err) {
+    // Offline or proxy unavailable in static local dev — will seamlessly use fallback slate
   }
 
-  // 3. Fallback
+  // 3. Fallback (offline or local static dev without serverless proxy)
   return FALLBACK_UPCOMING_SLATE;
 }
 

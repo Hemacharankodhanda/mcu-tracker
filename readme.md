@@ -89,7 +89,7 @@ Spanning **55 titles** across **6 Phases** and **2 Sagas** (**39 Movies**, **14 
 | **Core** | Vanilla HTML5, CSS3, JavaScript (ES6) — zero UI frameworks, zero build step |
 | **State & Persistence** | Browser `localStorage` & `sessionStorage` — 100% client-side, zero backend required |
 | **Routing** | Hash-based SPA router (`#dashboard`, `#tracker`, `#timeline`, `#quizzes`, `#profile`, `#details/<id>`) |
-| **Media & Metadata** | [TMDB API](https://www.themoviedb.org/) with bundled poster mapping + 24h upcoming release cache |
+| **Media & Metadata** | [TMDB API](https://www.themoviedb.org/) via secure Vercel Serverless proxy (`/api/tmdb`) + bundled poster mapping |
 | **Graphics & Sharing** | Native HTML5 `<canvas>` generator + Web Share API |
 | **Icons & Fonts** | [Lucide Icons](https://lucide.dev/), Barlow Condensed, Inter, JetBrains Mono |
 | **PWA & Caching** | Web App Manifest + Service Worker (`sw.js`) |
@@ -125,7 +125,7 @@ python -m http.server 8000
 # -> http://localhost:8000
 ```
 
-> **Security Note for Production Forks:** `js/tmdb.js` and `js/upcoming.js` query the TMDB v3 API directly from the browser using a client-side API key. If you fork this project for high-traffic production use and want to keep your TMDB key private, consider routing TMDB requests through a lightweight Vercel Serverless Function proxy (`/api/tmdb`) rather than exposing the key client-side.
+> **TMDB API Key Configuration:** For production deployments on Vercel, set your TMDB API key in **Vercel Project Settings → Environment Variables** as `TMDB_API_KEY`. The serverless function at `/api/tmdb` securely attaches this key on Vercel's servers so it is never exposed in client bundles. For local static development without Vercel CLI, all 55 verified posters and upcoming releases use bundled data and curated fallbacks automatically.
 
 ---
 
@@ -135,6 +135,8 @@ python -m http.server 8000
 
 ```text
 mcu-tracker/
+├── api/
+│   └── tmdb.js                # Vercel Serverless Function (secure TMDB API proxy + Edge cache)
 ├── index.html                 # App shell, navigation, SPA sections & onboarding modal
 ├── manifest.webmanifest       # PWA manifest (standalone, theme #0B0B0F, icons)
 ├── sw.js                      # Service Worker (app shell precache + TMDB poster caching)

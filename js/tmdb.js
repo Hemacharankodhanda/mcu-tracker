@@ -1,10 +1,7 @@
 /* =============================================================
-   MCU Tracker — TMDB API (tmdb.js)
-   Fetching and caching posters
+   MCU Tracker — TMDB API & Metadata (tmdb.js)
+   Fetching, caching posters & title metadata via /api/tmdb proxy
    ============================================================= */
-
-// User provided TMDB API key
-const TMDB_API_KEY = '9816fd193bb1751d9e634e1999380bd7';
 
 const POSTER_CACHE_KEY = 'mcu_poster_cache_v8';
 
@@ -68,11 +65,6 @@ const KNOWN_POSTERS = {
 };
 
 async function fetchPostersFromTMDB() {
-  if (TMDB_API_KEY === 'YOUR_API_KEY_HERE' || !TMDB_API_KEY) {
-    console.warn('TMDB API Key missing. Skipping poster fetch.');
-    return;
-  }
-  
   // Read existing cache, pre-seeding from KNOWN_POSTERS if empty
   let cache = {};
   try {
@@ -96,14 +88,14 @@ async function fetchPostersFromTMDB() {
 
   let updated = false;
   
-  // Fetch missing posters
+  // Fetch missing posters via /api/tmdb proxy (for any new titles)
   for (const title of MCU_TITLES) {
     if (!title.tmdbId) continue;
     if (cache[title.id]) continue;
     
     try {
       const type = title.tmdbType === 'tv' ? 'tv' : 'movie';
-      const response = await fetch(`https://api.themoviedb.org/3/${type}/${title.tmdbId}?api_key=${TMDB_API_KEY}`);
+      const response = await fetch(`/api/tmdb?path=${type}/${title.tmdbId}`);
       if (response.ok) {
         const data = await response.json();
         if (data.poster_path) {
@@ -119,7 +111,7 @@ async function fetchPostersFromTMDB() {
         }
       }
     } catch(err) {
-      console.error(`Failed to fetch TMDB data for ${title.name}`, err);
+      // In offline or local static mode without proxy, KNOWN_POSTERS already covers all titles
     }
   }
   
@@ -146,10 +138,8 @@ function getPosterUrl(titleId) {
   return null;
 }
 
-// Fetch deep details (cast, crew, backdrop, overview)
+// Fetch deep details (cast, crew, backdrop, overview) via /api/tmdb proxy
 async function fetchTitleDetails(tmdbId, type = 'movie') {
-  if (!TMDB_API_KEY || TMDB_API_KEY === 'YOUR_API_KEY_HERE') return null;
-  
   const cacheKey = `mcu_details_${tmdbId}`;
   try {
     const cached = sessionStorage.getItem(cacheKey);
@@ -157,7 +147,7 @@ async function fetchTitleDetails(tmdbId, type = 'movie') {
   } catch(e) {}
   
   try {
-    const res = await fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}?api_key=${TMDB_API_KEY}&append_to_response=credits`);
+    const res = await fetch(`/api/tmdb?path=${type}/${tmdbId}&append_to_response=credits`);
     if (res.ok) {
       const data = await res.json();
       try {
@@ -166,7 +156,7 @@ async function fetchTitleDetails(tmdbId, type = 'movie') {
       return data;
     }
   } catch(err) {
-    console.error('Failed to fetch TMDB details', err);
+    console.warn('Failed to fetch TMDB details via proxy:', err);
   }
   return null;
 }
