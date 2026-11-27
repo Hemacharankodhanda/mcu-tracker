@@ -37,7 +37,7 @@
 
 Spanning **55 titles** across **6 Phases** and **2 Sagas** (**39 Movies**, **14 Series**, and **2 Specials**), keeping up with the Marvel Cinematic Universe shouldn't require juggling spreadsheets or ads-heavy wikis.
 
-**MCU Tracker** is a fast, zero-framework, installable Progressive Web App (PWA) designed with a restrained dark streaming aesthetic (`#0B0B0F`). Every watch status, star rating, quiz score, and achievement is stored locally in your browser — **no sign-up, no tracking accounts, and full offline support after your first visit**.
+**MCU Tracker** is a fast, zero-framework, installable Progressive Web App (PWA) designed with a restrained dark streaming aesthetic (`#0B0B0F`). Every watch status, rewatch count, quiz score, and achievement is stored locally in your browser — **no sign-up, no tracking accounts, and full offline support after your first visit**.
 
 ---
 
@@ -53,7 +53,6 @@ Spanning **55 titles** across **6 Phases** and **2 Sagas** (**39 Movies**, **14 
 - **Dual Watch Orders:** Instant segmented toggle between **Release Order** and **Chronological Order**, persisted across sessions while sharing a single watch-state map keyed by title ID.
 - **Three-State Tracking:** Cycle effortlessly through **Unwatched (`○`) → Watched (`✓`) → Rewatched (`↻`)** with automatic rewatch counting.
 - **Instant Search & Filtering:** Debounced, case-insensitive title search paired with **Status** filters (`All`, `Watched`, `Unwatched`) and clear empty states.
-- **Personal Ratings:** 1–5 star ratings saved per title.
 - **Instant Posters:** All 55 verified TMDB poster paths bundled for immediate first-frame rendering with skeleton loaders and graceful fallbacks.
 
 ### Interactive Timeline (`#timeline`)

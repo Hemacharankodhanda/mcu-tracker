@@ -243,7 +243,6 @@ function groupBySaga(titles) {
 
 function renderTitleCard(title, orderNum) {
   const status = getWatchStatus(title.id);
-  const rating = getRating(title.id);
   const rewatchCount = getRewatchCount(title.id);
   const gradient = getPhaseGradient(title.phase);
   
@@ -308,16 +307,6 @@ function renderTitleCard(title, orderNum) {
             ${statusLabel}
             ${rippleHtml}
           </button>
-          <div class="star-rating" data-title-id="${title.id}">
-            ${[1,2,3,4,5].map(s => `
-              <button class="star-rating__star ${s <= rating ? 'star-rating__star--filled' : ''}" 
-                      onclick="event.stopPropagation(); rateTitleStar('${title.id}', ${s})"
-                      onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation(); event.preventDefault(); rateTitleStar('${title.id}', ${s});}"
-                      aria-label="Rate ${title.name} ${s} star${s > 1 ? 's' : ''}">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-              </button>
-            `).join('')}
-          </div>
         </div>
       </div>
     </div>
