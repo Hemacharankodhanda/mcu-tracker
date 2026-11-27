@@ -2620,6 +2620,7 @@ input, select, textarea {
    ═══════════════════════════════════════════════════════════ */
 
 .details-page {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -2632,13 +2633,14 @@ input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: rgba(10, 10, 15, 0.6);
+  background: rgba(10, 10, 15, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color-text-primary);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
+  cursor: pointer;
 }
 
 .details-hero {
@@ -2664,8 +2666,9 @@ input, select, textarea {
   position: relative;
   z-index: 10;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--space-5);
   padding: var(--space-6) var(--space-4);
   width: 100%;
   max-width: 1200px;
@@ -2673,8 +2676,9 @@ input, select, textarea {
 }
 
 .details-hero__poster {
-  display: none; /* hidden on mobile to save space, rely on backdrop */
-  width: 200px;
+  display: block;
+  width: 110px;
+  height: 165px;
   flex-shrink: 0;
   border-radius: var(--radius-md);
   overflow: hidden;

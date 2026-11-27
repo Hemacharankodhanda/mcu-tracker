@@ -1376,6 +1376,17 @@ async function fetchPostersFromTMDB() {
     } catch(e) {}
   }
 
+// ── Global TMDB Proxy URL Resolver ─────────────────────────
+function getTmdbProxyUrl(path, query = '') {
+  const isLocal = typeof window !== 'undefined' && (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.protocol === 'file:'
+  );
+  const base = isLocal ? 'https://mcu-tracker-pi.vercel.app/api/tmdb' : '/api/tmdb';
+  return query ? `${base}?path=${path}&${query}` : `${base}?path=${path}`;
+}
+
   let updated = false;
   
   // Fetch missing posters via /api/tmdb proxy (for any new titles)
@@ -1385,7 +1396,7 @@ async function fetchPostersFromTMDB() {
     
     try {
       const type = title.tmdbType === 'tv' ? 'tv' : 'movie';
-      const response = await fetch(`/api/tmdb?path=${type}/${title.tmdbId}`);
+      const response = await fetch(getTmdbProxyUrl(`${type}/${title.tmdbId}`));
       if (response.ok) {
         const data = await response.json();
         if (data.poster_path) {
@@ -1437,7 +1448,8 @@ async function fetchTitleDetails(tmdbId, type = 'movie') {
   } catch(e) {}
   
   try {
-    const res = await fetch(`/api/tmdb?path=${type}/${tmdbId}&append_to_response=credits`);
+    const url = getTmdbProxyUrl(`${type}/${tmdbId}`, 'append_to_response=credits');
+    const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
       try {
@@ -3648,7 +3660,9 @@ async function getUpcomingReleases() {
   // 2. Fetch from TMDB via /api/tmdb serverless proxy
   try {
     const today = new Date().toISOString().split('T')[0];
-    const url = `/api/tmdb?path=discover/movie&with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`;
+    const url = typeof getTmdbProxyUrl === 'function'
+      ? getTmdbProxyUrl('discover/movie', `with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`)
+      : `/api/tmdb?path=discover/movie&with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`;
     const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
@@ -3823,7 +3837,7 @@ async function initDetails(titleId) {
     container.innerHTML = `
       <div style="padding: var(--space-8); text-align: center;">
         <h2>Title not found</h2>
-        <button class="btn btn--primary" onclick="navigateTo('tracker')" style="margin-top: var(--space-4)">Back to Tracker</button>
+        <button class="btn btn-primary" onclick="navigateTo('tracker')" style="margin-top: var(--space-4)">Back to Tracker</button>
       </div>
     `;
     return;
@@ -3834,28 +3848,28 @@ async function initDetails(titleId) {
   const statusLabel = status === 'unwatched' ? 'Mark Watched' : status === 'watched' ? 'Watched' : 'Rewatched';
   const statusClass = status === 'watched' ? 'watch-chip--watched' : status === 'rewatched' ? 'watch-chip--rewatched' : 'watch-chip--unwatched';
 
-  // Render initial skeleton / loading state with what we know from data.js
+  // Format dates and metadata
   const posterUrl = getPosterUrl(title.id);
   const typeStr = title.type === 'movie' ? 'Film' : title.type === 'series' ? 'Series' : 'Special';
-  const year = new Date(title.releaseDate).getFullYear();
+  const releaseDateObj = new Date(title.releaseDate);
+  const releaseDateFormatted = releaseDateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const year = releaseDateObj.getFullYear();
+  const sagaName = title.saga === 'infinity' ? 'The Infinity Saga' : 'The Multiverse Saga';
   
   let html = `
     <div class="details-page">
-      <button class="details-back btn" onclick="navigateTo('tracker')" aria-label="Go back">
+      <button class="details-back btn btn-secondary" onclick="navigateTo('tracker')" aria-label="Go back">
         <i data-lucide="arrow-left"></i> Back
       </button>
       
       <div class="details-hero" id="details-hero-${title.id}">
-        <!-- Backdrop will be injected here -->
         <div class="details-hero__gradient"></div>
         <div class="details-hero__content">
-          <div class="details-hero__poster" style="background: ${getPhaseGradient(title.phase)}; position: relative; overflow: hidden; width: 140px; height: 210px;">
+          <div class="details-hero__poster" style="background: ${getPhaseGradient(title.phase)}; position: relative; overflow: hidden;">
             ${posterUrl ? `
               <div class="skeleton-shimmer"></div>
               <img src="${posterUrl}" 
                    alt="${title.name} poster" 
-                   width="140" 
-                   height="210" 
                    loading="lazy" 
                    class="poster-img"
                    onload="this.classList.add('loaded'); this.parentElement.querySelector('.skeleton-shimmer')?.remove();"
@@ -3885,15 +3899,45 @@ async function initDetails(titleId) {
       </div>
       
       <div class="details-body">
+        <!-- Quick Specs Grid -->
+        <section class="details-section">
+          <div class="grid grid--stats" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-6);">
+            <div class="stat-card">
+              <div class="stat-card__label">Release Date</div>
+              <div style="font-weight: 600; font-size: var(--text-small); color: var(--color-text-primary); margin-top: 4px;">${releaseDateFormatted}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__label">Timeline Placement</div>
+              <div style="font-weight: 600; font-size: var(--text-small); color: var(--color-infinity-gold); margin-top: 4px;">#${title.chronologicalOrder} in Chronology</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__label">Saga</div>
+              <div style="font-weight: 600; font-size: var(--text-small); color: var(--color-text-primary); margin-top: 4px;">${sagaName}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__label">Post-Credits</div>
+              <div style="font-weight: 600; font-size: var(--text-small); color: var(--color-text-primary); margin-top: 4px;">${title.postCreditCount > 0 ? `${title.postCreditCount} Scene${title.postCreditCount > 1 ? 's' : ''}` : 'None'}</div>
+            </div>
+            <div class="stat-card" id="details-director-card" style="display: none;">
+              <div class="stat-card__label" id="details-director-label">Director</div>
+              <div id="details-director-name" style="font-weight: 600; font-size: var(--text-small); color: var(--color-text-primary); margin-top: 4px;">—</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Synopsis -->
         <section class="details-section">
           <h2 class="details-section__title">Synopsis</h2>
           <p class="details-section__text" id="details-overview">${title.synopsis}</p>
         </section>
         
-        <section class="details-section" id="details-cast-section" style="display: none;">
+        <!-- Top Cast Rail -->
+        <section class="details-section" id="details-cast-section">
           <h2 class="details-section__title">Top Cast</h2>
           <div class="cast-rail" id="details-cast-rail">
-            <!-- Cast will be injected here -->
+            <div class="cast-loading-state" style="color: var(--color-text-muted); font-size: var(--text-small); padding: var(--space-3) 0;">
+              Loading cast & crew...
+            </div>
           </div>
         </section>
       </div>
@@ -3922,28 +3966,51 @@ async function initDetails(titleId) {
         const overviewEl = document.getElementById('details-overview');
         if (overviewEl) overviewEl.textContent = tmdbData.overview;
       }
+
+      // Director or Series Creator
+      if (tmdbData.credits && tmdbData.credits.crew) {
+        const director = tmdbData.credits.crew.find(c => c.job === 'Director');
+        const directorCard = document.getElementById('details-director-card');
+        const directorName = document.getElementById('details-director-name');
+        const directorLabel = document.getElementById('details-director-label');
+        if (director && directorCard && directorName) {
+          directorName.textContent = director.name;
+          directorLabel.textContent = 'Director';
+          directorCard.style.display = 'block';
+        } else if (tmdbData.created_by && tmdbData.created_by.length > 0) {
+          directorName.textContent = tmdbData.created_by.map(c => c.name).join(', ');
+          directorLabel.textContent = 'Creator';
+          directorCard.style.display = 'block';
+        }
+      }
       
       // Render cast
-      if (tmdbData.credits && tmdbData.credits.cast && tmdbData.credits.cast.length > 0) {
-        const castSection = document.getElementById('details-cast-section');
-        const castRail = document.getElementById('details-cast-rail');
-        
-        if (castSection && castRail) {
+      const castRail = document.getElementById('details-cast-rail');
+      if (castRail) {
+        if (tmdbData.credits && tmdbData.credits.cast && tmdbData.credits.cast.length > 0) {
           const topCast = tmdbData.credits.cast.slice(0, 10);
           castRail.innerHTML = topCast.map(actor => {
-            const profileUrl = actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+            const profileUrl = actor.profile_path 
+              ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` 
+              : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
             return `
               <div class="cast-card">
                 <div class="cast-card__img" style="${!actor.profile_path ? 'background: var(--color-surface); padding: 12px; color: var(--color-text-muted)' : ''}">
                   <img src="${profileUrl}" alt="${actor.name}" width="64" height="64" loading="lazy" style="${!actor.profile_path ? 'object-fit: contain' : ''}">
                 </div>
                 <div class="cast-card__name">${actor.name}</div>
-                <div class="cast-card__character">${actor.character}</div>
+                <div class="cast-card__character">${actor.character || 'Cast'}</div>
               </div>
             `;
           }).join('');
-          castSection.style.display = 'block';
+        } else {
+          castRail.innerHTML = '<p class="micro" style="color: var(--color-text-muted); padding: var(--space-2) 0;">No cast information listed.</p>';
         }
+      }
+    } else {
+      const castRail = document.getElementById('details-cast-rail');
+      if (castRail) {
+        castRail.innerHTML = '<p class="micro" style="color: var(--color-text-muted); padding: var(--space-2) 0;">Cast information will load once connected to the network.</p>';
       }
     }
   }
@@ -4124,7 +4191,11 @@ let currentPage = 'dashboard';
 function navigateTo(page) {
   const basePage = page.split('/')[0];
   if (!PAGES.includes(basePage)) page = 'dashboard';
-  window.location.hash = page;
+  if (window.location.hash === '#' + page) {
+    handleRoute();
+  } else {
+    window.location.hash = page;
+  }
 }
 
 function handleRoute() {
@@ -4152,11 +4223,14 @@ function handleRoute() {
     item.classList.toggle('nav-item--active', item.dataset.page === page);
   });
   
-  // Hide/Show bottom nav on details page
+  // Hide/Show bottom nav on details page on mobile (keep sidebar visible on desktop)
   const nav = document.querySelector('.bottom-nav');
   if (nav) {
-    if (page === 'details') nav.style.display = 'none';
-    else nav.style.display = '';
+    if (page === 'details' && window.innerWidth < 1024) {
+      nav.style.display = 'none';
+    } else {
+      nav.style.display = '';
+    }
   }
   
   // Initialize page

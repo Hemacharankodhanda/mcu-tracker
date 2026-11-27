@@ -11,7 +11,11 @@ let currentPage = 'dashboard';
 function navigateTo(page) {
   const basePage = page.split('/')[0];
   if (!PAGES.includes(basePage)) page = 'dashboard';
-  window.location.hash = page;
+  if (window.location.hash === '#' + page) {
+    handleRoute();
+  } else {
+    window.location.hash = page;
+  }
 }
 
 function handleRoute() {
@@ -39,11 +43,14 @@ function handleRoute() {
     item.classList.toggle('nav-item--active', item.dataset.page === page);
   });
   
-  // Hide/Show bottom nav on details page
+  // Hide/Show bottom nav on details page on mobile (keep sidebar visible on desktop)
   const nav = document.querySelector('.bottom-nav');
   if (nav) {
-    if (page === 'details') nav.style.display = 'none';
-    else nav.style.display = '';
+    if (page === 'details' && window.innerWidth < 1024) {
+      nav.style.display = 'none';
+    } else {
+      nav.style.display = '';
+    }
   }
   
   // Initialize page

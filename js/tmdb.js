@@ -86,6 +86,17 @@ async function fetchPostersFromTMDB() {
     } catch(e) {}
   }
 
+// ── Global TMDB Proxy URL Resolver ─────────────────────────
+function getTmdbProxyUrl(path, query = '') {
+  const isLocal = typeof window !== 'undefined' && (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.protocol === 'file:'
+  );
+  const base = isLocal ? 'https://mcu-tracker-pi.vercel.app/api/tmdb' : '/api/tmdb';
+  return query ? `${base}?path=${path}&${query}` : `${base}?path=${path}`;
+}
+
   let updated = false;
   
   // Fetch missing posters via /api/tmdb proxy (for any new titles)
@@ -95,7 +106,7 @@ async function fetchPostersFromTMDB() {
     
     try {
       const type = title.tmdbType === 'tv' ? 'tv' : 'movie';
-      const response = await fetch(`/api/tmdb?path=${type}/${title.tmdbId}`);
+      const response = await fetch(getTmdbProxyUrl(`${type}/${title.tmdbId}`));
       if (response.ok) {
         const data = await response.json();
         if (data.poster_path) {
@@ -147,7 +158,8 @@ async function fetchTitleDetails(tmdbId, type = 'movie') {
   } catch(e) {}
   
   try {
-    const res = await fetch(`/api/tmdb?path=${type}/${tmdbId}&append_to_response=credits`);
+    const url = getTmdbProxyUrl(`${type}/${tmdbId}`, 'append_to_response=credits');
+    const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
       try {

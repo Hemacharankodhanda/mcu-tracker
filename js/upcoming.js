@@ -49,7 +49,9 @@ async function getUpcomingReleases() {
   // 2. Fetch from TMDB via /api/tmdb serverless proxy
   try {
     const today = new Date().toISOString().split('T')[0];
-    const url = `/api/tmdb?path=discover/movie&with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`;
+    const url = typeof getTmdbProxyUrl === 'function'
+      ? getTmdbProxyUrl('discover/movie', `with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`)
+      : `/api/tmdb?path=discover/movie&with_companies=420&primary_release_date.gte=${today}&sort_by=primary_release_date.asc`;
     const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
