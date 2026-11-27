@@ -2511,38 +2511,7 @@ function renderQuizPage() {
 }
 
 function renderQuizCategories(container) {
-  const dailyStatus = getDailyQuizStatus();
-  const streak = getStreak();
-  
   container.innerHTML = `
-    <div class="section">
-      <div class="daily-banner" onclick="startDailyQuiz()" id="daily-quiz-banner" 
-           ${dailyStatus ? 'style="opacity: 0.6; pointer-events: none;"' : ''}>
-        <div class="daily-banner__icon"><i data-lucide="zap"></i></div>
-        <div class="daily-banner__content">
-          <div class="daily-banner__title">Daily Challenge</div>
-          <div class="daily-banner__subtitle">
-            ${dailyStatus 
-              ? `Completed! You scored ${dailyStatus.score}/${dailyStatus.total}` 
-              : '5 questions from across the MCU. One attempt per day.'}
-          </div>
-        </div>
-        ${!dailyStatus ? `
-          <div class="daily-banner__action">
-            <span class="btn btn-primary btn-sm">Play Now</span>
-          </div>
-        ` : ''}
-      </div>
-      ${streak.current > 0 ? `
-        <div style="margin-top: var(--space-4); text-align: center;">
-          <span class="streak">
-            <span class="streak__icon"><i data-lucide="flame"></i></span>
-            ${streak.current} day streak${streak.best > streak.current ? ` · Best: ${streak.best}` : ''}
-          </span>
-        </div>
-      ` : ''}
-    </div>
-    
     <div class="section">
       <div class="section__header">
         <h2 class="section__title">Quiz Categories</h2>
